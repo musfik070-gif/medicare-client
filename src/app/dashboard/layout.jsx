@@ -36,12 +36,12 @@ export default function DashboardLayout({ children }) {
         {/* Main Content Area */}
         <div className="drawer-content flex flex-col bg-base-200 min-h-screen">
           {/* Mobile Top Navbar (Only visible on small screens) */}
-          <div className="w-full navbar bg-base-100 lg:hidden shadow-sm">
+          <div className="w-full navbar bg-base-100 lg:hidden shadow-md border-b border-base-300">
             <div className="flex-none">
               <label
                 htmlFor="dashboard-drawer"
                 aria-label="open sidebar"
-                className="btn btn-square btn-ghost"
+                className="btn btn-square btn-ghost text-primary"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +58,7 @@ export default function DashboardLayout({ children }) {
                 </svg>
               </label>
             </div>
-            <div className="flex-1 px-2 mx-2 font-bold text-primary">
+            <div className="flex-1 px-2 mx-2 font-extrabold text-primary">
               MediCare Connect
             </div>
           </div>
@@ -74,21 +74,21 @@ export default function DashboardLayout({ children }) {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <ul className="menu p-4 w-80 min-h-full bg-base-100 text-base-content border-r border-base-300 flex flex-col">
+          <ul className="menu p-4 w-80 min-h-full bg-base-100 text-base-content border-r border-base-300 flex flex-col shadow-xl">
             {/* User Profile Header */}
-            <div className="flex flex-col items-center mb-8 mt-4">
+            <div className="flex flex-col items-center mb-8 mt-4 rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 p-5">
               <div className="avatar mb-3">
-                <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 shadow-lg">
                   <img
                     src={user?.photoURL || "https://via.placeholder.com/150"}
                     alt="Profile"
                   />
                 </div>
               </div>
-              <h2 className="text-xl font-bold">
+              <h2 className="text-xl font-extrabold text-center">
                 {user?.name || "Loading..."}
               </h2>
-              <span className="badge badge-primary badge-outline uppercase mt-1">
+              <span className="badge badge-primary badge-outline uppercase mt-2">
                 {user?.role}
               </span>
             </div>
@@ -178,7 +178,7 @@ export default function DashboardLayout({ children }) {
             <li>
               <button
                 onClick={handleLogout}
-                className="text-error font-bold mt-2"
+                className="text-error font-bold mt-2 hover:bg-error/10"
               >
                 🚪 Logout
               </button>

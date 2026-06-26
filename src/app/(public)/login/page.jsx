@@ -55,51 +55,51 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[calc(100vh-100px)] bg-base-200 p-4">
-      <div className="card w-full max-w-md shadow-2xl bg-base-100">
-        <div className="card-body">
-          <h2 className="text-3xl font-bold text-center mb-4">Login</h2>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-primary/10 via-base-200 to-secondary/10 p-4">
+      <div className="card w-full max-w-md shadow-2xl bg-base-100 border border-base-300">
+        <div className="card-body p-8">
+          <h2 className="text-3xl font-extrabold text-center mb-2 text-primary">Login</h2>
 
-          <form onSubmit={handleEmailLogin}>
+          <form onSubmit={handleEmailLogin} className="space-y-4">
             {/* Email Field */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Email</span>
+                <span className="label-text font-semibold">Email</span>
               </label>
               <input
                 type="email"
                 name="email"
                 placeholder="email@example.com"
-                className="input input-bordered"
+                className="input input-bordered w-full focus:input-primary"
                 required
               />
             </div>
 
             {/* Password Field */}
-            <div className="form-control mt-4">
+            <div className="form-control">
               <label className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text font-semibold">Password</span>
               </label>
               <input
                 type="password"
                 name="password"
                 placeholder="******"
-                className="input input-bordered"
+                className="input input-bordered w-full focus:input-primary"
                 required
               />
             </div>
 
             {/* Error and Success Messages */}
-            {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+            {error && <p className="alert alert-error py-2 text-sm mt-2">{error}</p>}
             {success && (
-              <p className="text-green-500 text-sm mt-2">{success}</p>
+              <p className="alert alert-success py-2 text-sm mt-2">{success}</p>
             )}
 
             {/* Submit Button */}
-            <div className="form-control mt-6">
+            <div className="form-control pt-2">
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="btn btn-primary w-full shadow-lg shadow-primary/20"
                 disabled={loading}
               >
                 {loading ? (
@@ -111,12 +111,12 @@ export default function LoginPage() {
             </div>
           </form>
 
-          <div className="divider">OR</div>
+          <div className="divider text-base-content/50">OR</div>
 
           {/* Google Login Button */}
           <button
             onClick={handleGoogleLogin}
-            className="btn btn-outline btn-secondary"
+            className="btn btn-outline btn-secondary w-full"
             type="button"
           >
             <svg
@@ -144,7 +144,7 @@ export default function LoginPage() {
             Continue with Google
           </button>
 
-          <p className="text-center mt-4 text-sm">
+          <p className="text-center mt-4 text-sm text-base-content/70">
             Don't have an account?{" "}
             <Link
               href="/register"

@@ -56,23 +56,23 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[calc(100vh-100px)] bg-base-200 p-4">
-      <div className="card w-full max-w-md shadow-2xl bg-base-100">
-        <form onSubmit={handleRegister} className="card-body">
-          <h2 className="text-3xl font-bold text-center mb-4">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-primary/10 via-base-200 to-secondary/10 p-4">
+      <div className="card w-full max-w-md shadow-2xl bg-base-100 border border-base-300">
+        <form onSubmit={handleRegister} className="card-body p-8 space-y-3">
+          <h2 className="text-3xl font-extrabold text-center mb-2 text-primary">
             Create Account
           </h2>
 
           {/* Name Field */}
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Full Name</span>
+              <span className="label-text font-semibold">Full Name</span>
             </label>
             <input
               type="text"
               name="name"
               placeholder="John Doe"
-              className="input input-bordered"
+              className="input input-bordered w-full focus:input-primary"
               required
             />
           </div>
@@ -80,13 +80,13 @@ export default function RegisterPage() {
           {/* Email Field */}
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Email</span>
+              <span className="label-text font-semibold">Email</span>
             </label>
             <input
               type="email"
               name="email"
               placeholder="email@example.com"
-              className="input input-bordered"
+              className="input input-bordered w-full focus:input-primary"
               required
             />
           </div>
@@ -94,13 +94,13 @@ export default function RegisterPage() {
           {/* Photo URL Field */}
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Photo URL</span>
+              <span className="label-text font-semibold">Photo URL</span>
             </label>
             <input
               type="url"
               name="photoURL"
               placeholder="https://example.com/photo.jpg"
-              className="input input-bordered"
+              className="input input-bordered w-full focus:input-primary"
               required
             />
           </div>
@@ -108,26 +108,26 @@ export default function RegisterPage() {
           {/* Password Field */}
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Password</span>
+              <span className="label-text font-semibold">Password</span>
             </label>
             <input
               type="password"
               name="password"
               placeholder="******"
-              className="input input-bordered"
+              className="input input-bordered w-full focus:input-primary"
               required
             />
           </div>
 
           {/* Error and Success Messages */}
-          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-          {success && <p className="text-green-500 text-sm mt-2">{success}</p>}
+          {error && <p className="alert alert-error py-2 text-sm mt-2">{error}</p>}
+          {success && <p className="alert alert-success py-2 text-sm mt-2">{success}</p>}
 
           {/* Submit Button */}
-          <div className="form-control mt-6">
+          <div className="form-control pt-3">
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-primary w-full shadow-lg shadow-primary/20"
               disabled={loading}
             >
               {loading ? (
@@ -138,7 +138,7 @@ export default function RegisterPage() {
             </button>
           </div>
 
-          <p className="text-center mt-4 text-sm">
+          <p className="text-center mt-4 text-sm text-base-content/70">
             Already have an account?{" "}
             <Link
               href="/login"

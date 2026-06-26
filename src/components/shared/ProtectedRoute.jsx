@@ -46,9 +46,9 @@ export default function ProtectedRoute({ children, allowedRoles }) {
   // Show a loading spinner while the security check happens
   if (!isAuthorized) {
     return (
-      <div className="min-h-screen flex justify-center items-center bg-base-200">
+      <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-primary/10 via-base-200 to-secondary/10">
         <span className="loading loading-spinner loading-lg text-primary"></span>
-        <p className="ml-4 font-semibold text-gray-500">Verifying access...</p>
+        <p className="ml-4 font-semibold text-base-content/60">Verifying access...</p>
       </div>
     );
   }
