@@ -7,20 +7,26 @@ export default function FindDoctorsPage() {
   const [doctors, setDoctors] = useState([]);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  // Function to fetch data from our backend
-  const fetchDoctors = async (searchQuery = "", sortOption = "") => {
+  // Fetch doctors and include the current page in the URL
+  const fetchDoctors = async (
+    searchQuery = "",
+    sortOption = "",
+    currentPage = 1,
+  ) => {
     setLoading(true);
     try {
-      // Notice how we pass the search and sort directly into the URL!
       const response = await fetch(
-        `http://localhost:5001/api/doctors?search=${searchQuery}&sort=${sortOption}`,
+        `http://localhost:5001/api/doctors?search=${searchQuery}&sort=${sortOption}&page=${currentPage}&limit=6`,
       );
       const result = await response.json();
 
       if (result.success) {
         setDoctors(result.data);
+        setTotalPages(result.totalPages || 1);
       }
     } catch (error) {
       console.error("Failed to fetch doctors:", error);
@@ -29,15 +35,16 @@ export default function FindDoctorsPage() {
     }
   };
 
-  // 1. Fetch doctors when the page first loads AND whenever the "sort" dropdown changes
+  // Fetch data when sort or page changes
   useEffect(() => {
-    fetchDoctors(search, sort);
-  }, [sort]);
+    fetchDoctors(search, sort, page);
+  }, [sort, page]);
 
-  // 2. Fetch doctors ONLY when the user clicks the "Search" button
+  // Handle manual search form submission
   const handleSearch = (e) => {
     e.preventDefault();
-    fetchDoctors(search, sort);
+    setPage(1); // Always reset to page 1 on a fresh search
+    fetchDoctors(search, sort, 1);
   };
 
   return (
@@ -59,7 +66,6 @@ export default function FindDoctorsPage() {
             onSubmit={handleSearch}
             className="flex flex-col md:flex-row gap-4 items-center justify-between"
           >
-            {/* Search Bar */}
             <div className="form-control w-full md:w-1/2">
               <div className="input-group flex w-full">
                 <input
@@ -75,12 +81,14 @@ export default function FindDoctorsPage() {
               </div>
             </div>
 
-            {/* Sort Dropdown */}
             <div className="form-control w-full md:w-1/4 mt-4 md:mt-0">
               <select
                 className="select select-bordered w-full"
                 value={sort}
-                onChange={(e) => setSort(e.target.value)}
+                onChange={(e) => {
+                  setSort(e.target.value);
+                  setPage(1);
+                }}
               >
                 <option value="">Sort By (Default)</option>
                 <option value="feeAsc">Fee: Low to High</option>
@@ -135,10 +143,6 @@ export default function FindDoctorsPage() {
                       <strong>Consultation Fee:</strong> $
                       {doctor.consultationFee}
                     </p>
-                    <p>
-                      <strong>Available Days:</strong>{" "}
-                      {doctor.availableDays?.join(", ") || "N/A"}
-                    </p>
                   </div>
 
                   <div className="card-actions mt-4 w-full">
@@ -155,7 +159,32 @@ export default function FindDoctorsPage() {
           </div>
         )}
 
-        {/* Step 8 Placeholder: Pagination will go here next! */}
+        {/* Pagination UI */}
+        {!loading && doctors.length > 0 && (
+          <div className="flex justify-center mt-10">
+            <div className="join">
+              <button
+                className="join-item btn"
+                disabled={page === 1}
+                onClick={() => setPage(page - 1)}
+              >
+                « Prev
+              </button>
+
+              <button className="join-item btn cursor-default">
+                Page {page} of {totalPages}
+              </button>
+
+              <button
+                className="join-item btn"
+                disabled={page === totalPages}
+                onClick={() => setPage(page + 1)}
+              >
+                Next »
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
