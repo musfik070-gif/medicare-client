@@ -2,15 +2,20 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { loginUserAPI } from "../../../services/auth/authService";
 
 export default function LoginPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const handleEmailLogin = (e) => {
+  const handleEmailLogin = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
+    setLoading(true);
 
     const form = e.target;
     const email = form.email.value;
@@ -18,19 +23,35 @@ export default function LoginPage() {
 
     if (!email || !password) {
       setError("Please fill in both email and password.");
+      setLoading(false);
       return;
     }
 
-    console.log("Email Login Data:", { email, password });
-    setSuccess("Email login submitted! Ready for backend connection.");
+    // Call the backend API
+    const credentials = { email, password };
+    const response = await loginUserAPI(credentials);
+
+    if (response.success) {
+      setSuccess("Login successful! Redirecting to dashboard...");
+
+      // Save the VIP pass (Token) and User data to browser storage
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("user", JSON.stringify(response.user));
+
+      // Redirect user to the private dashboard
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1500);
+    } else {
+      setError(response.message || "Invalid credentials.");
+    }
+
+    setLoading(false);
   };
 
   const handleGoogleLogin = () => {
     setError("");
-    setSuccess(
-      "Google login clicked! Ready for Firebase/Better Auth integration.",
-    );
-    console.log("Initiating Google Login...");
+    setSuccess("Google login clicked! We will integrate this later.");
   };
 
   return (
@@ -76,8 +97,16 @@ export default function LoginPage() {
 
             {/* Submit Button */}
             <div className="form-control mt-6">
-              <button type="submit" className="btn btn-primary">
-                Login with Email
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={loading}
+              >
+                {loading ? (
+                  <span className="loading loading-spinner"></span>
+                ) : (
+                  "Login with Email"
+                )}
               </button>
             </div>
           </form>
@@ -88,6 +117,7 @@ export default function LoginPage() {
           <button
             onClick={handleGoogleLogin}
             className="btn btn-outline btn-secondary"
+            type="button"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
