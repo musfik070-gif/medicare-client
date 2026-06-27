@@ -7,9 +7,13 @@ export default function PatientAppointmentsPage() {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Payment Modal State
+  // Modals State
   const [selectedAppt, setSelectedAppt] = useState(null);
   const [processing, setProcessing] = useState(false);
+
+  // Review State
+  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState("");
 
   const fetchAppointments = async () => {
     try {
@@ -38,10 +42,22 @@ export default function PatientAppointmentsPage() {
     document.getElementById("payment_modal").showModal();
   };
 
+  const openPrescriptionModal = (appt) => {
+    setSelectedAppt(appt);
+    document.getElementById("prescription_modal").showModal();
+  };
+
+  const openReviewModal = (appt) => {
+    setSelectedAppt(appt);
+    setRating(5);
+    setComment("");
+    document.getElementById("review_modal").showModal();
+  };
+
+  // --- HANDLERS ---
   const handlePayment = async (e) => {
     e.preventDefault();
     setProcessing(true);
-
     const token = localStorage.getItem("token");
     const payload = {
       appointmentId: selectedAppt._id,
@@ -63,28 +79,57 @@ export default function PatientAppointmentsPage() {
           body: JSON.stringify(payload),
         },
       );
-
       const result = await response.json();
       if (result.success) {
-        alert(`Payment Successful! Transaction ID: ${result.transactionId}`);
+        alert("Payment Successful!");
         document.getElementById("payment_modal").close();
-        fetchAppointments(); // Refresh the table to show "Paid" status
+        fetchAppointments();
       }
     } catch (error) {
-      console.error("Payment failed:", error);
-      alert("Payment failed. Please try again.");
+      alert("Payment failed.");
     } finally {
       setProcessing(false);
     }
   };
 
-  if (loading) {
+  const handleReview = async (e) => {
+    e.preventDefault();
+    setProcessing(true);
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await fetch("http://localhost:5001/api/reviews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          doctorId: selectedAppt.doctorId,
+          doctorName: selectedAppt.doctorName,
+          patientName: selectedAppt.patientName,
+          rating,
+          comment,
+        }),
+      });
+      const result = await response.json();
+      if (result.success) {
+        alert("Review submitted! Thank you for your feedback.");
+        document.getElementById("review_modal").close();
+      }
+    } catch (error) {
+      alert("Failed to submit review.");
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  if (loading)
     return (
       <div className="flex justify-center py-20">
         <span className="loading loading-spinner loading-lg text-primary"></span>
       </div>
     );
-  }
 
   return (
     <div className="bg-base-100 rounded-xl shadow-xl p-6 md:p-10">
@@ -94,11 +139,11 @@ export default function PatientAppointmentsPage() {
             My Appointments
           </h1>
           <p className="text-gray-500">
-            Track the status of your upcoming and past medical consultations.
+            Track your consultations and medical records.
           </p>
         </div>
         <Link href="/find-doctors" className="btn btn-primary">
-          Book New Appointment
+          Book New
         </Link>
       </div>
 
@@ -106,9 +151,8 @@ export default function PatientAppointmentsPage() {
         <table className="table table-zebra w-full">
           <thead className="bg-base-200 text-base-content text-sm">
             <tr>
-              <th>Doctor Name</th>
+              <th>Doctor</th>
               <th>Date & Time</th>
-              <th>Fee</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -121,38 +165,46 @@ export default function PatientAppointmentsPage() {
                   <div className="font-semibold">{appt.date}</div>
                   <div className="text-sm opacity-70">{appt.time}</div>
                 </td>
-                <td className="font-mono text-success font-semibold">
-                  ${appt.fee}
-                </td>
                 <td>
                   <span
                     className={`badge ${
-                      appt.status === "Paid" || appt.status === "Completed"
+                      appt.status === "Completed"
                         ? "badge-success"
-                        : appt.status === "Approved"
+                        : appt.status === "Paid"
                           ? "badge-info"
-                          : appt.status === "Cancelled"
-                            ? "badge-error"
-                            : "badge-warning"
+                          : "badge-warning"
                     }`}
                   >
                     {appt.status || "Pending"}
                   </span>
                 </td>
                 <td>
-                  {/* Show Pay button ONLY if status is Approved */}
-                  {appt.status === "Approved" ? (
-                    <button
-                      onClick={() => openPaymentModal(appt)}
-                      className="btn btn-sm btn-success text-white"
-                    >
-                      Pay Now
-                    </button>
-                  ) : (
-                    <span className="text-xs text-gray-400">
-                      No action needed
-                    </span>
-                  )}
+                  <div className="flex gap-2">
+                    {appt.status === "Approved" && (
+                      <button
+                        onClick={() => openPaymentModal(appt)}
+                        className="btn btn-sm btn-success text-white"
+                      >
+                        Pay Now
+                      </button>
+                    )}
+                    {appt.status === "Completed" && (
+                      <>
+                        <button
+                          onClick={() => openPrescriptionModal(appt)}
+                          className="btn btn-sm btn-outline btn-primary"
+                        >
+                          View Note
+                        </button>
+                        <button
+                          onClick={() => openReviewModal(appt)}
+                          className="btn btn-sm btn-ghost text-secondary"
+                        >
+                          Leave Review
+                        </button>
+                      </>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}
@@ -160,115 +212,128 @@ export default function PatientAppointmentsPage() {
         </table>
       </div>
 
-      {/* Payment Checkout Modal */}
+      {/* --- PAYMENT MODAL (Same as Step 22) --- */}
       <dialog id="payment_modal" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-2xl text-primary mb-4">
             Secure Checkout
           </h3>
-
-          {selectedAppt && (
-            <div className="bg-base-200 p-4 rounded-lg mb-6">
-              <div className="flex justify-between mb-2">
-                <span className="text-gray-500">Consultation with:</span>
-                <span className="font-bold">{selectedAppt.doctorName}</span>
-              </div>
-              <div className="flex justify-between mb-2">
-                <span className="text-gray-500">Date & Time:</span>
-                <span className="font-bold">
-                  {selectedAppt.date} at {selectedAppt.time}
-                </span>
-              </div>
-              <div className="divider my-2"></div>
-              <div className="flex justify-between text-lg">
-                <span className="font-bold">Total Due:</span>
-                <span className="font-bold text-success">
-                  ${selectedAppt.fee}
-                </span>
-              </div>
-            </div>
-          )}
-
-          <form onSubmit={handlePayment} className="space-y-4">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold">
-                  Cardholder Name
-                </span>
-              </label>
-              <input
-                type="text"
-                placeholder="John Doe"
-                required
-                className="input input-bordered w-full"
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold">
-                  Card Number (Simulated)
-                </span>
-              </label>
-              <input
-                type="text"
-                placeholder="4242 4242 4242 4242"
-                required
-                maxLength="16"
-                className="input input-bordered w-full"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold">Expiry Date</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="MM/YY"
-                  required
-                  className="input input-bordered w-full"
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold">CVV</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="123"
-                  required
-                  maxLength="3"
-                  className="input input-bordered w-full"
-                />
-              </div>
-            </div>
-
-            <div className="modal-action mt-6">
+          <form onSubmit={handlePayment}>
+            <p className="mb-4 text-lg">
+              Total Due:{" "}
+              <span className="font-bold text-success">
+                ${selectedAppt?.fee}
+              </span>
+            </p>
+            <div className="modal-action">
               <button
                 type="button"
                 className="btn btn-ghost"
                 onClick={() => document.getElementById("payment_modal").close()}
-                disabled={processing}
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="btn btn-success text-white px-8"
+                className="btn btn-success text-white"
                 disabled={processing}
               >
-                {processing ? (
-                  <span className="loading loading-spinner"></span>
-                ) : (
-                  `Pay $${selectedAppt?.fee}`
-                )}
+                Confirm Payment
               </button>
             </div>
           </form>
         </div>
-        <form method="dialog" className="modal-backdrop">
-          <button disabled={processing}>close</button>
-        </form>
+      </dialog>
+
+      {/* --- PRESCRIPTION VIEW MODAL --- */}
+      <dialog
+        id="prescription_modal"
+        className="modal modal-bottom sm:modal-middle"
+      >
+        <div className="modal-box w-11/12 max-w-2xl">
+          <h3 className="font-bold text-2xl text-primary mb-2">
+            Medical Prescription
+          </h3>
+          <p className="text-sm text-gray-500 mb-6">
+            Dr. {selectedAppt?.doctorName} | {selectedAppt?.date}
+          </p>
+
+          <div className="bg-base-200 p-6 rounded-lg whitespace-pre-wrap font-mono text-sm border border-base-300 min-h-[150px]">
+            {selectedAppt?.prescription ||
+              "No notes were provided by the doctor."}
+          </div>
+
+          <div className="modal-action">
+            <button
+              className="btn"
+              onClick={() =>
+                document.getElementById("prescription_modal").close()
+              }
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </dialog>
+
+      {/* --- REVIEW MODAL --- */}
+      <dialog id="review_modal" className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+          <h3 className="font-bold text-2xl text-primary mb-4">
+            Rate Your Experience
+          </h3>
+          <form onSubmit={handleReview}>
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text font-semibold">Rating (1-5)</span>
+              </label>
+              <input
+                type="range"
+                min="1"
+                max="5"
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+                className="range range-primary"
+                step="1"
+              />
+              <div className="w-full flex justify-between text-xs px-2 mt-2">
+                <span>1 ⭐️</span>
+                <span>2 ⭐️</span>
+                <span>3 ⭐️</span>
+                <span>4 ⭐️</span>
+                <span>5 ⭐️</span>
+              </div>
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-semibold">Feedback</span>
+              </label>
+              <textarea
+                required
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                className="textarea textarea-bordered h-24"
+                placeholder="How was your consultation?"
+              ></textarea>
+            </div>
+            <div className="modal-action mt-6">
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={() => document.getElementById("review_modal").close()}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={processing}
+              >
+                Submit Review
+              </button>
+            </div>
+          </form>
+        </div>
       </dialog>
     </div>
   );
