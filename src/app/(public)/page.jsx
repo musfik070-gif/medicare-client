@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Navbar from "@/src/components/shared/Navbar";
 
 export default function HomePage() {
   const [homeData, setHomeData] = useState(null);
@@ -45,6 +46,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-base-100 text-base-content">
+      <Navbar />
       {/* 1. Banner Section */}
       <motion.section
         initial={{ opacity: 0, y: -50 }}
