@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { loginUserAPI } from "../../../services/auth/authService";
+import { authClient } from "../../../lib/auth-client";
 
 export default function LoginPage() {
   const [error, setError] = useState("");
@@ -49,9 +50,71 @@ export default function LoginPage() {
     setLoading(false);
   };
 
-  const handleGoogleLogin = () => {
+  useEffect(() => {
+    const handleGoogleCallback = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("google_success") === "true") {
+        setLoading(true);
+        setError("");
+        setSuccess("Authenticating with Google...");
+        try {
+          const { data, error: sessionErr } = await authClient.getSession();
+          if (sessionErr || !data) {
+            setError("Failed to retrieve Google session.");
+            setLoading(false);
+            return;
+          }
+
+          // Exchange Better Auth session for the JWT token
+          const serverUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
+          const response = await fetch(`${serverUrl}/api/auth/google`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: data.user.name,
+              email: data.user.email,
+              photoURL: data.user.image || "",
+            }),
+          });
+
+          const result = await response.json();
+          if (result.success) {
+            setSuccess("Google login successful! Redirecting to dashboard...");
+            localStorage.setItem("token", result.token);
+            localStorage.setItem("user", JSON.stringify(result.user));
+            setTimeout(() => {
+              router.push("/dashboard");
+            }, 1500);
+          } else {
+            setError(result.message || "Failed to log in with Google.");
+          }
+        } catch (err) {
+          console.error("Callback verification failed:", err);
+          setError("An error occurred during Google sign-in verification.");
+        }
+        setLoading(false);
+      }
+    };
+
+    handleGoogleCallback();
+  }, [router]);
+
+  const handleGoogleLogin = async () => {
     setError("");
-    setSuccess("Google login clicked! We will integrate this later.");
+    setSuccess("");
+    setLoading(true);
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: window.location.origin + "/login?google_success=true",
+      });
+    } catch (err) {
+      console.error("Google Login Error:", err);
+      setError("Failed to initiate Google login.");
+      setLoading(false);
+    }
   };
 
   return (
