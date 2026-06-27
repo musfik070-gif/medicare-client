@@ -40,7 +40,7 @@ export default function ContactPage() {
 
           {/* Contact Form (UI only as per requirements) */}
           <div className="bg-base-100 p-8 rounded-xl shadow-lg border border-base-200">
-            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-4">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Name</span>
@@ -70,7 +70,7 @@ export default function ContactPage() {
                   placeholder="How can we help you?"
                 ></textarea>
               </div>
-              <button type="submit" className="btn btn-primary w-full mt-4">
+              <button type="button" className="btn btn-primary w-full mt-4">
                 Send Message
               </button>
             </form>
