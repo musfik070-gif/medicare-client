@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Navbar from "@/src/components/shared/Navbar";
+import Footer from "@/src/components/shared/Footer";
 
 export default function HomePage() {
   const [homeData, setHomeData] = useState(null);
@@ -216,6 +217,7 @@ export default function HomePage() {
           </div>
         </div>
       </motion.section>
+      <Footer />
     </div>
   );
 }
