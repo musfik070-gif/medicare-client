@@ -102,6 +102,14 @@ export default function DashboardLayout({ children }) {
                     <Link href="/dashboard/patient">My Dashboard</Link>
                   </li>
                   <li>
+                    <Link
+                      href="/dashboard/patient/profile"
+                      className="hover:text-primary"
+                    >
+                      My Profile
+                    </Link>
+                  </li>
+                  <li>
                     <Link href="/dashboard/patient/appointments">
                       My Appointments
                     </Link>
