@@ -262,7 +262,7 @@ export default function PatientAppointmentsPage() {
                           onClick={() => openPrescriptionModal(appt)}
                           className="btn btn-sm btn-outline btn-primary"
                         >
-                          View Note
+                          View Prescription
                         </button>
                         <button
                           onClick={() => openReviewModal(appt)}

@@ -42,8 +42,17 @@ export default function Navbar() {
           <li>
             <Link href="/contact">Contact Us</Link>
           </li>
+          {user?.role === "patient" && (
+            <li>
+              <Link href="/join-doctor" className="btn btn-sm btn-outline btn-primary">
+                Join as a Doctor
+              </Link>
+            </li>
+          )}
           <li>
-            <Link href="/dashboard">Dashboard</Link>
+            <Link href={user?.role ? `/dashboard/${user.role}` : "/dashboard"}>
+              Dashboard
+            </Link>
           </li>
         </ul>
 
@@ -66,7 +75,9 @@ export default function Navbar() {
                 <span className="block p-0 text-xs opacity-70">{user.email}</span>
               </li>
               <li>
-                <Link href="/dashboard">Dashboard</Link>
+                <Link href={user?.role ? `/dashboard/${user.role}` : "/dashboard"}>
+                  Dashboard
+                </Link>
               </li>
               <li>
                 <button type="button" onClick={handleLogout}>
