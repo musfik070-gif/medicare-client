@@ -117,7 +117,7 @@ export default function HomePage() {
               More doctors joining soon!
             </p>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {homeData?.featuredDoctors?.map((doctor) => (
                 <div
                   key={doctor._id}
@@ -181,28 +181,28 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            <div className="card bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 hover:bg-sky-500 dark:hover:bg-sky-500 hover:text-white dark:hover:text-white transition-all duration-300 hover:shadow-md py-8 cursor-pointer group rounded-2xl">
+          <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto px-4">
+            <div className="card w-40 sm:w-44 lg:w-48 flex-shrink-0 bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 hover:bg-sky-500 dark:hover:bg-sky-500 hover:text-white dark:hover:text-white transition-all duration-300 hover:shadow-md py-8 cursor-pointer group rounded-2xl">
               <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-200">❤️</div>
               <h3 className="font-bold text-lg group-hover:text-white dark:group-hover:text-white text-slate-800 dark:text-white transition-colors">Cardiology</h3>
             </div>
 
-            <div className="card bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 hover:bg-sky-500 dark:hover:bg-sky-500 hover:text-white dark:hover:text-white transition-all duration-300 hover:shadow-md py-8 cursor-pointer group rounded-2xl">
+            <div className="card w-40 sm:w-44 lg:w-48 flex-shrink-0 bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 hover:bg-sky-500 dark:hover:bg-sky-500 hover:text-white dark:hover:text-white transition-all duration-300 hover:shadow-md py-8 cursor-pointer group rounded-2xl">
               <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-200">🧠</div>
               <h3 className="font-bold text-lg group-hover:text-white dark:group-hover:text-white text-slate-800 dark:text-white transition-colors">Neurology</h3>
             </div>
 
-            <div className="card bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 hover:bg-sky-500 dark:hover:bg-sky-500 hover:text-white dark:hover:text-white transition-all duration-300 hover:shadow-md py-8 cursor-pointer group rounded-2xl">
+            <div className="card w-40 sm:w-44 lg:w-48 flex-shrink-0 bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 hover:bg-sky-500 dark:hover:bg-sky-500 hover:text-white dark:hover:text-white transition-all duration-300 hover:shadow-md py-8 cursor-pointer group rounded-2xl">
               <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-200">🦴</div>
               <h3 className="font-bold text-lg group-hover:text-white dark:group-hover:text-white text-slate-800 dark:text-white transition-colors">Orthopedics</h3>
             </div>
 
-            <div className="card bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 hover:bg-sky-500 dark:hover:bg-sky-500 hover:text-white dark:hover:text-white transition-all duration-300 hover:shadow-md py-8 cursor-pointer group rounded-2xl">
+            <div className="card w-40 sm:w-44 lg:w-48 flex-shrink-0 bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 hover:bg-sky-500 dark:hover:bg-sky-500 hover:text-white dark:hover:text-white transition-all duration-300 hover:shadow-md py-8 cursor-pointer group rounded-2xl">
               <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-200">🧸</div>
               <h3 className="font-bold text-lg group-hover:text-white dark:group-hover:text-white text-slate-800 dark:text-white transition-colors">Pediatrics</h3>
             </div>
 
-            <div className="card bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 hover:bg-sky-500 dark:hover:bg-sky-500 hover:text-white dark:hover:text-white transition-all duration-300 hover:shadow-md py-8 cursor-pointer group rounded-2xl">
+            <div className="card w-40 sm:w-44 lg:w-48 flex-shrink-0 bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 hover:bg-sky-500 dark:hover:bg-sky-500 hover:text-white dark:hover:text-white transition-all duration-300 hover:shadow-md py-8 cursor-pointer group rounded-2xl">
               <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-200">✨</div>
               <h3 className="font-bold text-lg group-hover:text-white dark:group-hover:text-white text-slate-800 dark:text-white transition-colors">Dermatology</h3>
             </div>
