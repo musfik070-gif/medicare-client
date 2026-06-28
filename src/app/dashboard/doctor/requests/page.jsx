@@ -88,40 +88,65 @@ export default function AppointmentRequestsPage() {
             {appointments.map((appt) => (
               <tr key={appt._id}>
                 <td>
-                  <div className="font-bold">{appt.patientName}</div>
+                  <div className="font-bold">
+                    {appt.patientName || "Anonymous"}
+                  </div>
                   <div className="text-sm opacity-70">{appt.patientEmail}</div>
                 </td>
                 <td>
-                  <div className="font-semibold">{appt.date}</div>
-                  <div className="text-sm">{appt.time}</div>
+                  <div className="font-semibold">
+                    {appt.date || appt.appointmentDate}
+                  </div>
+                  <div className="text-sm">
+                    {appt.time || appt.appointmentTime}
+                  </div>
                 </td>
                 <td>
                   <span
                     className={`badge ${
-                      appt.status === "Completed"
+                      (appt.status || appt.appointmentStatus) === "Completed"
                         ? "badge-success"
-                        : appt.status === "Approved"
+                        : (appt.status || appt.appointmentStatus) ===
+                            "Approved"
                           ? "badge-info"
                           : "badge-warning"
                     }`}
                   >
-                    {appt.status || "Pending"}
+                    {appt.status || appt.appointmentStatus || "Pending"}
                   </span>
                 </td>
                 <td>
                   <div className="flex gap-2">
-                    {/* Only show Approve if it's currently Pending */}
-                    {(!appt.status || appt.status === "Pending") && (
-                      <button
-                        onClick={() => handleStatusChange(appt._id, "Approved")}
-                        className="btn btn-sm btn-info text-white"
-                      >
-                        Approve
-                      </button>
-                    )}
+                    {/* Only show Accept/Reject if it's currently Pending */}
+                    {(!appt.status && !appt.appointmentStatus) ||
+                    appt.status === "Pending" ||
+                    appt.appointmentStatus === "Pending" ? (
+                      <>
+                        <button
+                          onClick={() =>
+                            handleStatusChange(appt._id, "Approved")
+                          }
+                          className="btn btn-sm btn-success text-white"
+                        >
+                          Accept
+                        </button>
+                        <button
+                          onClick={() =>
+                            handleStatusChange(appt._id, "Rejected")
+                          }
+                          className="btn btn-sm btn-error text-white"
+                        >
+                          Reject
+                        </button>
+                      </>
+                    ) : null}
 
-                    {/* Only show Complete if it's currently Approved */}
-                    {appt.status === "Approved" && (
+                    {appt.status === "Rejected" ||
+                    appt.appointmentStatus === "Rejected" ? (
+                      <span className="text-error font-bold">Rejected</span>
+                    ) : null}
+
+                    {(appt.status || appt.appointmentStatus) === "Approved" && (
                       <button
                         onClick={() =>
                           handleStatusChange(appt._id, "Completed")
