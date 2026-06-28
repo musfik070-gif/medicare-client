@@ -29,24 +29,35 @@ export default function DoctorProfilePage() {
         );
         const result = await response.json();
 
-        if (result.success && result.data.email) {
-          // Pre-fill the form with existing data. Convert availableDays array to comma-string if needed.
+        if (result.success && result.data && Object.keys(result.data).length > 0) {
+          // Pre-fill the form with existing data securely ensuring no undefined/null values
           setFormData({
-            ...result.data,
+            doctorName: result.data.doctorName || "",
+            specialization: result.data.specialization || "",
+            qualifications: result.data.qualifications || "",
+            hospitalName: result.data.hospitalName || "",
+            experience: result.data.experience !== undefined && result.data.experience !== null ? result.data.experience : "",
+            consultationFee: result.data.consultationFee !== undefined && result.data.consultationFee !== null ? result.data.consultationFee : "",
             availableDays: Array.isArray(result.data.availableDays)
               ? result.data.availableDays.join(", ")
               : result.data.availableDays || "",
+            profileImage: result.data.profileImage || "",
           });
         } else {
           // If no profile exists yet, pre-fill name and photo from user auth data
           const userStr = localStorage.getItem("user");
           if (userStr) {
             const user = JSON.parse(userStr);
-            setFormData((prev) => ({
-              ...prev,
-              doctorName: user.name,
-              profileImage: user.photoURL,
-            }));
+            setFormData({
+              doctorName: user.name || "",
+              specialization: "",
+              qualifications: "",
+              hospitalName: "",
+              experience: "",
+              consultationFee: "",
+              availableDays: "",
+              profileImage: user.photoURL || "",
+            });
           }
         }
       } catch (error) {
@@ -60,7 +71,7 @@ export default function DoctorProfilePage() {
   }, []);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value ?? "" }));
   };
 
   const handleSubmit = async (e) => {
@@ -71,10 +82,12 @@ export default function DoctorProfilePage() {
     // Convert comma-separated days into an array for the database
     const payload = {
       ...formData,
-      experience: Number(formData.experience),
-      consultationFee: Number(formData.consultationFee),
-      availableDays: formData.availableDays.split(",").map((day) => day.trim()),
+      experience: formData.experience !== "" ? Number(formData.experience) : 0,
+      consultationFee: formData.consultationFee !== "" ? Number(formData.consultationFee) : 0,
+      availableDays: formData.availableDays ? formData.availableDays.split(",").map((day) => day.trim()) : [],
     };
+
+    console.log("Saving doctor profile - Request payload:", payload);
 
     try {
       const token = localStorage.getItem("token");
@@ -91,16 +104,16 @@ export default function DoctorProfilePage() {
       );
 
       const result = await response.json();
+      console.log("Saving doctor profile - Response body:", result);
+
       if (result.success) {
-        setMessage(
-          "Profile saved successfully! If you are a new doctor, wait for Admin verification.",
-        );
+        setMessage(result.message || "Profile saved successfully!");
       } else {
-        setMessage("Failed to save profile.");
+        setMessage(result.message || "Failed to save profile.");
       }
     } catch (error) {
       console.error("Save error:", error);
-      setMessage("An error occurred while saving.");
+      setMessage(error.message || "An error occurred while saving.");
     } finally {
       setSaving(false);
     }

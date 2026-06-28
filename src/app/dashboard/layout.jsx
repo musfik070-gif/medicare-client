@@ -27,8 +27,8 @@ export default function DashboardLayout({ children }) {
   const getLinkClass = (path) => {
     const isActive = pathname === path;
     return isActive
-      ? "flex items-center gap-3 px-4 py-3 rounded-none bg-sky-50 text-sky-600 font-semibold border-l-4 border-sky-500 pl-3 transition-all text-sm w-full"
-      : "flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-sky-50/50 hover:text-sky-600 transition-all text-sm w-full";
+      ? "flex items-center gap-3 px-4 py-3 rounded-none bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 font-semibold border-l-4 border-sky-500 pl-3 transition-all text-sm w-full"
+      : "flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-sky-50/50 dark:hover:bg-slate-950/20 hover:text-sky-600 dark:hover:text-sky-400 transition-all text-sm w-full";
   };
 
   return (
@@ -41,14 +41,14 @@ export default function DashboardLayout({ children }) {
         />
 
         {/* Main Content Area */}
-        <div className="drawer-content flex flex-col bg-slate-50 min-h-screen">
+        <div className="drawer-content flex flex-col bg-slate-50 dark:bg-slate-900 min-h-screen transition-colors duration-200">
           {/* Mobile Top Navbar (Only visible on small screens) */}
-          <div className="w-full navbar bg-white lg:hidden shadow-sm border-b border-slate-100 px-4 py-3">
+          <div className="w-full navbar bg-white dark:bg-slate-900 lg:hidden shadow-sm border-b border-slate-100 dark:border-slate-800 px-4 py-3">
             <div className="flex-none">
               <label
                 htmlFor="dashboard-drawer"
                 aria-label="open sidebar"
-                className="btn btn-square btn-ghost text-sky-500 hover:bg-sky-50"
+                className="btn btn-square btn-ghost text-sky-500 hover:bg-sky-50 dark:hover:bg-slate-800"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@ export default function DashboardLayout({ children }) {
                 </svg>
               </label>
             </div>
-            <div className="flex-1 px-2 mx-2 font-bold text-slate-800 text-lg flex items-center gap-2">
+            <div className="flex-1 px-2 mx-2 font-bold text-slate-800 dark:text-white text-lg flex items-center gap-2">
               <svg className="w-6 h-6 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
               </svg>
@@ -84,24 +84,24 @@ export default function DashboardLayout({ children }) {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <ul className="menu p-4 w-80 min-h-full bg-white text-slate-600 border-r border-slate-200 flex flex-col shadow-sm">
+          <ul className="menu p-4 w-80 min-h-full bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-r border-slate-200 dark:border-slate-800 flex flex-col shadow-sm transition-colors duration-200">
             {/* User Profile Header */}
-            <div className="flex flex-col items-center mb-6 mt-2 rounded-2xl bg-gradient-to-br from-sky-50 to-indigo-50/50 p-6 border border-slate-100 relative">
-              <span className="absolute top-3 right-3 badge bg-emerald-50 text-emerald-600 border-emerald-100 text-xs font-semibold px-2 py-0.5 rounded-full uppercase">
+            <div className="flex flex-col items-center mb-6 mt-2 rounded-2xl bg-gradient-to-br from-sky-50 to-indigo-50/50 dark:from-slate-800/40 dark:to-slate-800/20 p-6 border border-slate-100 dark:border-slate-800 relative">
+              <span className="absolute top-3 right-3 badge bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900 text-xs font-semibold px-2 py-0.5 rounded-full uppercase">
                 {user?.role}
               </span>
               <div className="avatar mb-3">
-                <div className="w-20 rounded-full ring-4 ring-sky-100 shadow-md">
+                <div className="w-20 rounded-full ring-4 ring-sky-100 dark:ring-slate-800 shadow-md">
                   <img
                     src={user?.photoURL || "https://via.placeholder.com/150"}
                     alt="Profile"
                   />
                 </div>
               </div>
-              <h2 className="text-lg font-bold text-slate-800 text-center">
+              <h2 className="text-lg font-bold text-slate-800 dark:text-white text-center">
                 {user?.name || "Loading..."}
               </h2>
-              <p className="text-xs text-slate-400 mt-1 break-all text-center max-w-full">
+              <p className="text-xs text-slate-400 dark:text-slate-500 mt-1 break-all text-center max-w-full">
                 {user?.email}
               </p>
             </div>

@@ -86,19 +86,19 @@ export default function PatientDashboardOverview() {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-6 md:p-10 font-sans">
+    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-4 sm:p-6 md:p-10 font-sans transition-colors duration-200">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-800 mb-2">
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">
           Welcome back, {userName}!
         </h1>
-        <p className="text-slate-500 text-base">
+        <p className="text-slate-505 dark:text-slate-400 text-base">
           Here is an overview of your healthcare journey.
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-4">
         {/* Card 1: Upcoming Appointments */}
-        <div className="card bg-white rounded-2xl border border-slate-100 border-l-4 border-sky-500 hover:shadow-md transition-all duration-200 shadow-sm flex flex-col justify-between p-6">
+        <div className="card bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 border-l-4 border-sky-500 hover:shadow-md transition-all duration-200 shadow-sm flex flex-col justify-between p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="bg-sky-50 text-sky-600 rounded-full p-3 flex items-center justify-center">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -116,12 +116,12 @@ export default function PatientDashboardOverview() {
             <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider">
               Upcoming Appointments
             </h2>
-            <p className="text-3xl font-bold text-slate-800 mt-1">{stats.upcoming}</p>
+            <p className="text-3xl font-bold text-slate-800 dark:text-white mt-1">{stats.upcoming}</p>
           </div>
         </div>
 
         {/* Card 2: Appointment History */}
-        <div className="card bg-white rounded-2xl border border-slate-100 border-l-4 border-emerald-500 hover:shadow-md transition-all duration-200 shadow-sm flex flex-col justify-between p-6">
+        <div className="card bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 border-l-4 border-emerald-500 hover:shadow-md transition-all duration-200 shadow-sm flex flex-col justify-between p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="bg-emerald-50 text-emerald-600 rounded-full p-3 flex items-center justify-center">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -139,12 +139,12 @@ export default function PatientDashboardOverview() {
             <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider">
               Appointment History
             </h2>
-            <p className="text-3xl font-bold text-slate-800 mt-1">{stats.history}</p>
+            <p className="text-3xl font-bold text-slate-800 dark:text-white mt-1">{stats.history}</p>
           </div>
         </div>
 
         {/* Card 3: Total Payments */}
-        <div className="card bg-white rounded-2xl border border-slate-100 border-l-4 border-amber-500 hover:shadow-md transition-all duration-200 shadow-sm flex flex-col justify-between p-6">
+        <div className="card bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 border-l-4 border-amber-500 hover:shadow-md transition-all duration-200 shadow-sm flex flex-col justify-between p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="bg-amber-50 text-amber-600 rounded-full p-3 flex items-center justify-center">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -162,12 +162,12 @@ export default function PatientDashboardOverview() {
             <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider">
               Total Payments
             </h2>
-            <p className="text-3xl font-bold text-slate-800 mt-1">${stats.totalPayments}</p>
+            <p className="text-3xl font-bold text-slate-800 dark:text-white mt-1">${stats.totalPayments}</p>
           </div>
         </div>
 
         {/* Card 4: Favorite Doctors */}
-        <div className="card bg-white rounded-2xl border border-slate-100 border-l-4 border-purple-500 hover:shadow-md transition-all duration-200 shadow-sm flex flex-col justify-between p-6">
+        <div className="card bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 border-l-4 border-purple-500 hover:shadow-md transition-all duration-200 shadow-sm flex flex-col justify-between p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="bg-purple-50 text-purple-600 rounded-full p-3 flex items-center justify-center">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -185,7 +185,7 @@ export default function PatientDashboardOverview() {
             <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider">
               Favorite Doctors
             </h2>
-            <p className="text-3xl font-bold text-slate-800 mt-1">{stats.favoriteDoctors}</p>
+            <p className="text-3xl font-bold text-slate-800 dark:text-white mt-1">{stats.favoriteDoctors}</p>
           </div>
         </div>
       </div>

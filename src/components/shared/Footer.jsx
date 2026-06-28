@@ -3,44 +3,44 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-base-200 text-base-content border-t border-base-300">
+    <footer className="bg-slate-800 border-t border-slate-700 font-sans transition-colors duration-200">
       <div className="container mx-auto px-4 py-12 lg:px-8">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <h2 className="text-2xl font-bold text-primary mb-3">
+            <h2 className="text-white font-bold text-xl mb-4">
               MediCare Connect
             </h2>
-            <p className="text-sm leading-relaxed text-base-content/70">
+            <p className="text-slate-400 text-sm leading-relaxed">
               Modern healthcare made simple with trusted doctors, secure
               appointments, and patient-first care.
             </p>
           </div>
 
           <div>
-            <h6 className="footer-title mb-3 text-primary">Quick Links</h6>
-            <ul className="space-y-2 text-sm">
+            <h6 className="text-sky-400 text-xs font-semibold uppercase tracking-widest mb-4">Quick Links</h6>
+            <ul className="space-y-2">
               <li>
-                <Link href="/" className="link link-hover">
+                <Link href="/" className="text-slate-300 hover:text-white transition-colors text-sm">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/find-doctors" className="link link-hover">
+                <Link href="/find-doctors" className="text-slate-300 hover:text-white transition-colors text-sm">
                   Find Doctors
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="link link-hover">
+                <Link href="/about" className="text-slate-300 hover:text-white transition-colors text-sm">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="link link-hover">
+                <Link href="/contact" className="text-slate-300 hover:text-white transition-colors text-sm">
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link href="/dashboard" className="link link-hover">
+                <Link href="/dashboard" className="text-slate-300 hover:text-white transition-colors text-sm">
                   Dashboard
                 </Link>
               </li>
@@ -48,8 +48,8 @@ export default function Footer() {
           </div>
 
           <div>
-            <h6 className="footer-title mb-3 text-primary">Contact</h6>
-            <ul className="space-y-2 text-sm text-base-content/80">
+            <h6 className="text-sky-400 text-xs font-semibold uppercase tracking-widest mb-4">Contact</h6>
+            <ul className="space-y-2 text-slate-400 text-sm leading-relaxed">
               <li>Email: support@medicareconnect.com</li>
               <li>Phone: +880 1234 567 890</li>
               <li>Address: 123 Health Ave, Medical City</li>
@@ -57,28 +57,26 @@ export default function Footer() {
           </div>
 
           <div>
-            <h6 className="footer-title mb-3 text-error">Emergency</h6>
-            <p className="text-xl font-bold text-error">Dial: 911 / 102</p>
-            <p className="mt-2 text-sm text-base-content/80">
+            <h6 className="text-sky-400 text-xs font-semibold uppercase tracking-widest mb-4">Emergency</h6>
+            <p className="text-red-400 font-bold text-xl">Dial: 911 / 102</p>
+            <p className="mt-2 text-slate-400 text-sm leading-relaxed">
               24/7 ambulance and emergency support.
             </p>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-4 border-t border-base-300 pt-6 md:flex-row md:items-center md:justify-between">
-          <p className="text-sm text-base-content/60">
-            © 2026 MediCare Connect. All rights reserved.
-          </p>
+        <div className="border-t border-slate-700 mt-8 pt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between text-slate-500 text-sm">
+          <p>© 2026 MediCare Connect. All rights reserved.</p>
           <div className="flex gap-4">
             <a
               href="#"
               aria-label="Facebook"
-              className="hover:text-primary transition-colors"
+              className="text-slate-400 hover:text-sky-400 transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 className="fill-current"
               >
@@ -88,12 +86,12 @@ export default function Footer() {
             <a
               href="#"
               aria-label="Twitter"
-              className="hover:text-primary transition-colors"
+              className="text-slate-400 hover:text-sky-400 transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 className="fill-current"
               >
