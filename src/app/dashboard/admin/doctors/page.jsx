@@ -71,24 +71,24 @@ export default function VerifyDoctorsPage() {
         Review pending doctor profiles and approve them for the platform.
       </p>
 
-      <div className="overflow-x-auto border border-slate-100 rounded-xl">
+      <div className="overflow-x-auto w-full max-w-full rounded-xl border border-slate-200">
         <table className="table w-full border-collapse">
           <thead>
             <tr className="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
-              <th className="py-4.5 px-6 font-semibold text-left">Doctor</th>
-              <th className="py-4.5 px-6 font-semibold text-left">Specialization</th>
-              <th className="py-4.5 px-6 font-semibold text-left">Experience</th>
-              <th className="py-4.5 px-6 font-semibold text-left">Status</th>
-              <th className="py-4.5 px-6 font-semibold text-left">Actions</th>
+              <th className="py-4.5 px-6 font-semibold text-left w-[200px]">Doctor</th>
+              <th className="py-4.5 px-6 font-semibold text-left w-[120px]">Specialization</th>
+              <th className="py-4.5 px-6 font-semibold text-left w-[100px]">Experience</th>
+              <th className="py-4.5 px-6 font-semibold text-left w-[100px]">Status</th>
+              <th className="py-4.5 px-6 font-semibold text-left w-[130px]">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             {doctors.map((doc) => (
               <tr key={doc._id} className="hover:bg-slate-50 transition-colors text-slate-700 text-sm">
-                <td className="py-4 px-6">
+                <td className="py-4 px-6 w-[200px] max-w-[200px]">
                   <div className="flex items-center gap-3">
                     <div className="avatar">
-                      <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-sky-100">
+                      <div className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-sky-100">
                         <img
                           src={
                             doc.profileImage ||
@@ -99,17 +99,17 @@ export default function VerifyDoctorsPage() {
                         />
                       </div>
                     </div>
-                    <div>
-                      <div className="font-bold text-slate-800">{doc.doctorName}</div>
-                      <div className="text-xs text-slate-400 mt-0.5">{doc.email}</div>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-sm font-medium text-slate-800 truncate" title={doc.doctorName}>{doc.doctorName}</div>
+                      <div className="text-xs text-slate-400 mt-0.5 truncate" title={doc.email}>{doc.email}</div>
                     </div>
                   </div>
                 </td>
-                <td className="py-4 px-6 text-slate-600">{doc.specialization}</td>
-                <td className="py-4 px-6 text-slate-600">{doc.experience} Years</td>
-                <td className="py-4 px-6">
+                <td className="py-4 px-6 text-sm text-slate-600 w-[120px] truncate" title={doc.specialization}>{doc.specialization}</td>
+                <td className="py-4 px-6 text-sm text-slate-600 w-[100px]">{doc.experience} Years</td>
+                <td className="py-4 px-6 w-[100px]">
                   <span
-                    className={`text-xs font-semibold px-2.5 py-1 rounded-full uppercase border ${
+                    className={`text-xs font-semibold px-2 py-0.5 rounded-full uppercase border ${
                       doc.verificationStatus === "Verified"
                         ? "bg-green-50 text-green-700 border-green-200"
                         : doc.verificationStatus === "Rejected"
@@ -120,11 +120,11 @@ export default function VerifyDoctorsPage() {
                     {doc.verificationStatus || "Pending"}
                   </span>
                 </td>
-                <td className="py-4 px-6">
-                  <div className="flex gap-2">
+                <td className="py-4 px-6 w-[130px]">
+                  <div className="flex gap-2 items-center">
                     <button
                       onClick={() => handleStatusUpdate(doc._id, "Verified")}
-                      className="bg-emerald-500 hover:bg-emerald-600 disabled:bg-slate-100 disabled:text-slate-400 text-white rounded-lg px-2.5 py-1.5 md:px-3 text-xs font-semibold transition-all duration-200 shadow-sm flex items-center gap-1.5 min-h-[44px]"
+                      className="bg-emerald-500 hover:bg-emerald-600 disabled:bg-slate-100 disabled:text-slate-400 text-white rounded-lg px-2 py-1.5 text-xs font-semibold transition-all duration-200 shadow-sm flex items-center gap-1.5 min-h-[44px]"
                       disabled={doc.verificationStatus === "Verified"}
                       title="Approve Doctor"
                     >
@@ -135,7 +135,7 @@ export default function VerifyDoctorsPage() {
                     </button>
                     <button
                       onClick={() => handleStatusUpdate(doc._id, "Rejected")}
-                      className="bg-red-500 hover:bg-red-600 disabled:bg-slate-100 disabled:text-slate-400 text-white rounded-lg px-2.5 py-1.5 md:px-3 text-xs font-semibold transition-all duration-200 shadow-sm flex items-center gap-1.5 min-h-[44px]"
+                      className="bg-red-500 hover:bg-red-600 disabled:bg-slate-100 disabled:text-slate-400 text-white rounded-lg px-2 py-1.5 text-xs font-semibold transition-all duration-200 shadow-sm flex items-center gap-1.5 min-h-[44px]"
                       disabled={doc.verificationStatus === "Rejected"}
                       title="Reject Doctor"
                     >
