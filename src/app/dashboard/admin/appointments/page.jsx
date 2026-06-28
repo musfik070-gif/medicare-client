@@ -42,41 +42,41 @@ export default function AdminAppointmentsPage() {
   }
 
   return (
-    <div className="bg-base-100 rounded-xl shadow-xl p-6 md:p-10">
-      <h1 className="text-3xl font-bold text-primary mb-2">All Appointments</h1>
-      <p className="text-gray-500 mb-8">
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-10 font-sans">
+      <h1 className="text-2xl font-bold text-slate-800 mb-2">All Appointments</h1>
+      <p className="text-slate-500 text-base mb-8">
         Platform-wide overview of all booked appointments.
       </p>
 
-      <div className="overflow-x-auto">
-        <table className="table table-zebra w-full">
-          <thead className="bg-base-200 text-base-content text-sm">
-            <tr>
-              <th>Patient</th>
-              <th>Doctor</th>
-              <th>Date & Time</th>
-              <th>Fee</th>
-              <th>Status</th>
+      <div className="overflow-x-auto border border-slate-100 rounded-xl">
+        <table className="table w-full border-collapse">
+          <thead>
+            <tr className="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
+              <th className="py-4.5 px-6 font-semibold text-left">Patient</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Doctor</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Date & Time</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Fee</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Status</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-slate-100">
             {appointments.map((appt) => (
-              <tr key={appt._id}>
-                <td className="font-semibold">{appt.patientName}</td>
-                <td>{appt.doctorName}</td>
-                <td>
-                  <div className="text-sm">{appt.date}</div>
-                  <div className="text-xs opacity-70">{appt.time}</div>
+              <tr key={appt._id} className="hover:bg-slate-50 transition-colors text-slate-700 text-sm">
+                <td className="py-4 px-6 font-semibold text-slate-800">{appt.patientName}</td>
+                <td className="py-4 px-6 text-slate-600">{appt.doctorName}</td>
+                <td className="py-4 px-6">
+                  <div className="font-semibold text-slate-700">{appt.date}</div>
+                  <div className="text-xs text-slate-400 mt-0.5">{appt.time}</div>
                 </td>
-                <td className="font-mono">${appt.fee}</td>
-                <td>
+                <td className="py-4 px-6 font-mono text-slate-500 font-semibold">${appt.fee}</td>
+                <td className="py-4 px-6">
                   <span
-                    className={`badge badge-sm ${
+                    className={`text-xs font-semibold px-2.5 py-1 rounded-full uppercase border ${
                       appt.status === "Completed"
-                        ? "badge-success"
+                        ? "bg-green-50 text-green-700 border-green-200"
                         : appt.status === "Cancelled"
-                          ? "badge-error"
-                          : "badge-warning"
+                          ? "bg-red-50 text-red-700 border-red-200"
+                          : "bg-amber-50 text-amber-700 border-amber-200"
                     }`}
                   >
                     {appt.status || "Pending"}
@@ -88,7 +88,7 @@ export default function AdminAppointmentsPage() {
         </table>
 
         {appointments.length === 0 && (
-          <div className="text-center py-10 text-gray-500">
+          <div className="text-center py-10 text-slate-400 text-sm bg-white">
             No appointments have been booked yet.
           </div>
         )}

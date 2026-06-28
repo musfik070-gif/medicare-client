@@ -82,56 +82,56 @@ export default function ManageSchedulePage() {
   }
 
   return (
-    <div className="bg-base-100 p-8 rounded-xl shadow-lg">
-      <h2 className="text-2xl font-bold mb-6">Manage Available Slots</h2>
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-10 font-sans max-w-2xl mx-auto">
+      <h2 className="text-2xl font-bold text-slate-800 mb-6">Manage Available Slots</h2>
 
       {/* Add Schedule */}
-      <div className="flex gap-2 mb-6">
+      <div className="flex gap-3 mb-8">
         <input
           type="time"
-          className="input input-bordered"
+          className="border border-slate-200 rounded-xl px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 text-sm"
           value={newSlot}
           onChange={(e) => setNewSlot(e.target.value)}
         />
-        <button onClick={handleAddSlot} className="btn btn-primary">
+        <button onClick={handleAddSlot} className="bg-sky-500 hover:bg-sky-600 text-white rounded-xl px-5 py-2 font-semibold transition-all duration-200 shadow-sm text-sm">
           Add Slot
         </button>
       </div>
 
       {/* Existing Schedule (Update/Remove) */}
-      <div className="space-y-3 mb-8">
+      <div className="space-y-4 mb-8">
         {slots.map((s) => (
-          <div key={s} className="flex flex-wrap items-center gap-2">
+          <div key={s} className="flex flex-wrap items-center gap-3 p-3 bg-slate-50/50 rounded-xl border border-slate-100">
             {editingSlot === s ? (
-              <>
+              <div className="flex items-center gap-2 w-full">
                 <input
                   type="time"
-                  className="input input-bordered input-sm"
+                  className="border border-slate-200 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 text-sm"
                   value={updatedSlot}
                   onChange={(e) => setUpdatedSlot(e.target.value)}
                 />
-                <button onClick={updateSlot} className="btn btn-sm btn-success">
+                <button onClick={updateSlot} className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200">
                   Update
                 </button>
                 <button
                   onClick={() => setEditingSlot(null)}
-                  className="btn btn-sm btn-ghost"
+                  className="text-slate-500 hover:text-slate-700 font-semibold px-2 py-1.5 text-xs"
                 >
                   Cancel
                 </button>
-              </>
+              </div>
             ) : (
               <>
-                <span className="badge badge-lg badge-info p-4">{s}</span>
+                <span className="bg-sky-50 text-sky-700 border border-sky-100 text-sm font-semibold px-4 py-1.5 rounded-lg">{s}</span>
                 <button
                   onClick={() => startUpdateSlot(s)}
-                  className="btn btn-sm btn-outline btn-primary"
+                  className="border border-sky-500 text-sky-500 hover:bg-sky-50/50 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200"
                 >
                   Update
                 </button>
                 <button
                   onClick={() => removeSlot(s)}
-                  className="btn btn-sm btn-outline btn-error"
+                  className="border border-red-500 text-red-500 hover:bg-red-50/50 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200"
                 >
                   Remove
                 </button>
@@ -143,10 +143,10 @@ export default function ManageSchedulePage() {
 
       <button
         onClick={saveSchedule}
-        className="btn btn-success w-full"
+        className="w-full bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl py-3 font-semibold transition-all duration-200 shadow-sm hover:shadow-md text-sm"
         disabled={saving}
       >
-        {saving ? <span className="loading loading-spinner"></span> : "Save Schedule"}
+        {saving ? <span className="loading loading-spinner text-white loading-sm"></span> : "Save Schedule"}
       </button>
     </div>
   );

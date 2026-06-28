@@ -93,62 +93,71 @@ export default function ManageUsersPage() {
   }
 
   return (
-    <div className="bg-base-100 rounded-2xl shadow-xl border border-base-300 p-6 md:p-10">
-      <h1 className="text-3xl md:text-4xl font-extrabold text-primary mb-2">Manage Users</h1>
-      <p className="text-base-content/60 mb-8">
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-10 font-sans">
+      <h1 className="text-2xl font-bold text-slate-800 mb-2">Manage Users</h1>
+      <p className="text-slate-500 text-base mb-8">
         View, suspend, or delete user accounts on the platform.
       </p>
 
-      <div className="overflow-x-auto rounded-xl border border-base-300">
-        <table className="table table-zebra w-full">
+      <div className="overflow-x-auto rounded-xl border border-slate-100">
+        <table className="table w-full border-collapse">
           {/* Table Head */}
-          <thead className="bg-base-200 text-base-content text-sm">
-            <tr>
-              <th>User</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>Actions</th>
+          <thead>
+            <tr className="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
+              <th className="py-4.5 px-6 font-semibold text-left">User</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Email</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Role</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Status</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Actions</th>
             </tr>
           </thead>
           {/* Table Body */}
-          <tbody>
+          <tbody className="divide-y divide-slate-100">
             {users.map((user) => (
-              <tr key={user._id} className="hover">
-                <td>
+              <tr key={user._id} className="hover:bg-slate-50 transition-colors text-slate-700 text-sm">
+                <td className="py-4 px-6">
                   <div className="flex items-center gap-3">
                     <div className="avatar">
-                      <div className="mask mask-squircle w-12 h-12 ring-1 ring-base-300">
+                      <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-sky-100">
                         <img
                           src={
                             user.photoURL || "https://via.placeholder.com/150"
                           }
                           alt={user.name}
+                          className="object-cover w-full h-full"
                         />
                       </div>
                     </div>
                     <div>
-                      <div className="font-bold text-base-content">{user.name}</div>
+                      <div className="font-bold text-slate-800">{user.name}</div>
                     </div>
                   </div>
                 </td>
-                <td>{user.email}</td>
-                <td>
+                <td className="py-4 px-6 text-slate-500">{user.email}</td>
+                <td className="py-4 px-6">
                   <span
-                    className={`badge ${user.role === "admin" ? "badge-primary" : "badge-ghost"} uppercase text-xs font-semibold`}
+                    className={`text-xs font-semibold px-2.5 py-1 rounded-full uppercase border ${
+                      user.role === "admin"
+                        ? "bg-sky-50 text-sky-700 border-sky-200"
+                        : "bg-slate-50 text-slate-600 border-slate-200"
+                    }`}
                   >
                     {user.role}
                   </span>
                 </td>
-                <td>
+                <td className="py-4 px-6">
                   <span
-                    className={`badge ${user.status === "suspended" ? "badge-error" : "badge-success"} badge-outline font-semibold`}
+                    className={`text-xs font-semibold px-2.5 py-1 rounded-full uppercase border ${
+                      user.status === "suspended"
+                        ? "bg-red-50 text-red-700 border-red-200"
+                        : "bg-green-50 text-green-700 border-green-200"
+                    }`}
                   >
                     {user.status || "active"}
                   </span>
                 </td>
-                <td>
-                  <div className="flex flex-wrap gap-2">
+                <td className="py-4 px-6">
+                  <div className="flex gap-2">
                     {/* Don't let an admin delete/suspend themselves! */}
                     {user.role !== "admin" && (
                       <>
@@ -159,13 +168,17 @@ export default function ManageUsersPage() {
                               user.status || "active",
                             )
                           }
-                          className={`btn btn-sm shadow-sm ${user.status === "suspended" ? "btn-success" : "btn-warning"}`}
+                          className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200 ${
+                            user.status === "suspended"
+                              ? "bg-sky-500 hover:bg-sky-600 text-white"
+                              : "bg-amber-500 hover:bg-amber-600 text-white"
+                          }`}
                         >
                           {user.status === "suspended" ? "Activate" : "Suspend"}
                         </button>
                         <button
                           onClick={() => handleDelete(user._id)}
-                          className="btn btn-sm btn-error shadow-sm"
+                          className="bg-red-500 hover:bg-red-600 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200"
                         >
                           Delete
                         </button>
@@ -179,7 +192,7 @@ export default function ManageUsersPage() {
         </table>
 
         {users.length === 0 && (
-          <div className="text-center py-10 text-base-content/60">No users found.</div>
+          <div className="text-center py-10 text-slate-400 text-sm bg-white">No users found.</div>
         )}
       </div>
     </div>

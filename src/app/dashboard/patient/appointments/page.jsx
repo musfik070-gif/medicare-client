@@ -127,31 +127,27 @@ export default function PatientAppointmentsPage() {
     e.preventDefault();
     setProcessing(true);
     const token = localStorage.getItem("token");
-    const payload = {
-      appointmentId: selectedAppt._id,
-      doctorId: selectedAppt.doctorId,
-      doctorName: selectedAppt.doctorName,
-      patientName: selectedAppt.patientName,
-      fee: selectedAppt.fee,
-    };
 
     try {
       const response = await fetch(
-        "http://localhost:5001/api/payments/process",
+        "http://localhost:5001/api/payments/create-checkout-session",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(payload),
+          body: JSON.stringify({
+            appointmentId: selectedAppt._id,
+            price: selectedAppt.fee,
+          }),
         },
       );
       const result = await response.json();
-      if (result.success) {
-        alert("Payment Successful!");
-        document.getElementById("payment_modal").close();
-        fetchAppointments();
+      if (result.success && result.url) {
+        window.location.href = result.url;
+      } else {
+        alert(result.message || "Payment failed.");
       }
     } catch (error) {
       alert("Payment failed.");
@@ -200,58 +196,62 @@ export default function PatientAppointmentsPage() {
     );
 
   return (
-    <div className="bg-base-100 rounded-xl shadow-xl p-6 md:p-10">
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-10 font-sans">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-primary mb-2">
+          <h1 className="text-2xl font-bold text-slate-800 mb-2">
             My Appointments
           </h1>
-          <p className="text-gray-500">
+          <p className="text-slate-500 text-base">
             Track your consultations and medical records.
           </p>
         </div>
-        <Link href="/find-doctors" className="btn btn-primary">
+        <Link href="/find-doctors" className="bg-sky-500 hover:bg-sky-600 text-white rounded-xl px-5 py-2.5 font-semibold transition-all duration-200 shadow-sm hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-sm">
           Book New
         </Link>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="table table-zebra w-full">
-          <thead className="bg-base-200 text-base-content text-sm">
-            <tr>
-              <th>Doctor</th>
-              <th>Date & Time</th>
-              <th>Status</th>
-              <th>Action</th>
+      <div className="overflow-x-auto border border-slate-100 rounded-xl">
+        <table className="table w-full border-collapse">
+          <thead>
+            <tr className="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
+              <th className="py-4.5 px-6 font-semibold text-left">Doctor</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Date & Time</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Status</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Action</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-slate-100">
             {appointments.map((appt) => (
-              <tr key={appt._id}>
-                <td className="font-bold">{appt.doctorName}</td>
-                <td>
-                  <div className="font-semibold">{appt.date}</div>
-                  <div className="text-sm opacity-70">{appt.time}</div>
+              <tr key={appt._id} className="hover:bg-slate-50 transition-colors text-slate-700 text-sm">
+                <td className="py-4 px-6 font-bold text-slate-800">{appt.doctorName}</td>
+                <td className="py-4 px-6">
+                  <div className="font-semibold text-slate-700">{appt.date}</div>
+                  <div className="text-xs text-slate-400 mt-0.5">{appt.time}</div>
                 </td>
-                <td>
+                <td className="py-4 px-6">
                   <span
-                    className={`badge ${
+                    className={`text-xs font-semibold px-2.5 py-1 rounded-full uppercase border ${
                       appt.status === "Completed"
-                        ? "badge-success"
+                        ? "bg-green-50 text-green-700 border-green-200"
                         : appt.status === "Paid"
-                          ? "badge-info"
-                          : "badge-warning"
+                          ? "bg-sky-50 text-sky-700 border-sky-200"
+                          : appt.status === "Approved"
+                            ? "bg-yellow-50 text-yellow-700 border-yellow-200"
+                            : appt.status === "Cancelled"
+                              ? "bg-red-50 text-red-700 border-red-200"
+                              : "bg-amber-50 text-amber-700 border-amber-200"
                     }`}
                   >
                     {appt.status || "Pending"}
                   </span>
                 </td>
-                <td>
+                <td className="py-4 px-6">
                   <div className="flex flex-wrap gap-2">
                     {appt.status === "Approved" && (
                       <button
                         onClick={() => openPaymentModal(appt)}
-                        className="btn btn-sm btn-success text-white"
+                        className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg px-4 py-2 font-semibold transition-all duration-200 text-xs"
                       >
                         Pay Now
                       </button>
@@ -260,13 +260,13 @@ export default function PatientAppointmentsPage() {
                       <>
                         <button
                           onClick={() => openPrescriptionModal(appt)}
-                          className="btn btn-sm btn-outline btn-primary"
+                          className="border border-sky-500 text-sky-500 hover:bg-sky-50/50 rounded-lg px-4 py-2 font-semibold transition-all duration-200 text-xs"
                         >
                           View Prescription
                         </button>
                         <button
                           onClick={() => openReviewModal(appt)}
-                          className="btn btn-sm btn-ghost text-secondary"
+                          className="text-slate-500 hover:text-slate-700 font-semibold px-2 py-1 text-xs"
                         >
                           Leave Review
                         </button>
@@ -284,20 +284,20 @@ export default function PatientAppointmentsPage() {
                             });
                             setIsModalOpen(true);
                           }}
-                          className="btn btn-sm btn-outline btn-primary"
+                          className="border border-sky-500 text-sky-500 hover:bg-sky-50/50 rounded-lg px-4 py-2 font-semibold transition-all duration-200 text-xs"
                         >
                           Reschedule
                         </button>
                         <button
                           onClick={() => handleCancel(appt._id)}
-                          className="btn btn-sm btn-outline btn-error"
+                          className="border border-red-500 text-red-500 hover:bg-red-50/50 rounded-lg px-4 py-2 font-semibold transition-all duration-200 text-xs"
                         >
                           Cancel
                         </button>
                       </>
                     )}
                     {appt.status === "Cancelled" && (
-                      <span className="text-error font-bold">Cancelled</span>
+                      <span className="text-red-600 font-semibold text-xs bg-red-50 px-2 py-1 rounded-lg border border-red-100">Cancelled</span>
                     )}
                   </div>
                 </td>
@@ -308,15 +308,15 @@ export default function PatientAppointmentsPage() {
       </div>
 
       {isModalOpen && (
-        <div className="modal modal-open">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg mb-4">Reschedule Appointment</h3>
-            <form onSubmit={handleReschedule}>
-              <div className="form-control mb-4">
-                <label className="label">New Date</label>
+        <div className="modal modal-open bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="modal-box bg-white rounded-2xl p-6 border border-slate-100 animate-in zoom-in-95 duration-200">
+            <h3 className="font-bold text-lg text-slate-800 mb-4">Reschedule Appointment</h3>
+            <form onSubmit={handleReschedule} className="space-y-4">
+              <div className="form-control">
+                <label className="label text-slate-600 text-sm font-medium">New Date</label>
                 <input
                   type="date"
-                  className="input input-bordered w-full"
+                  className="w-full border border-slate-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 text-sm"
                   required
                   value={rescheduleData.date}
                   onChange={(e) =>
@@ -327,11 +327,11 @@ export default function PatientAppointmentsPage() {
                   }
                 />
               </div>
-              <div className="form-control mb-4">
-                <label className="label">New Time</label>
+              <div className="form-control">
+                <label className="label text-slate-600 text-sm font-medium">New Time</label>
                 <input
                   type="time"
-                  className="input input-bordered w-full"
+                  className="w-full border border-slate-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 text-sm"
                   required
                   value={rescheduleData.time}
                   onChange={(e) =>
@@ -342,15 +342,15 @@ export default function PatientAppointmentsPage() {
                   }
                 />
               </div>
-              <div className="modal-action">
+              <div className="modal-action gap-2 pt-2">
                 <button
                   type="button"
-                  className="btn"
+                  className="border border-slate-200 text-slate-500 hover:bg-slate-50 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200"
                   onClick={() => setIsModalOpen(false)}
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="bg-sky-500 hover:bg-sky-600 text-white rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200 shadow-sm">
                   Confirm Reschedule
                 </button>
               </div>
@@ -359,30 +359,30 @@ export default function PatientAppointmentsPage() {
         </div>
       )}
 
-      {/* --- PAYMENT MODAL (Same as Step 22) --- */}
-      <dialog id="payment_modal" className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
-          <h3 className="font-bold text-2xl text-primary mb-4">
+      {/* --- PAYMENT MODAL --- */}
+      <dialog id="payment_modal" className="modal modal-bottom sm:modal-middle bg-slate-900/40 backdrop-blur-sm">
+        <div className="modal-box bg-white rounded-2xl p-6 border border-slate-100">
+          <h3 className="font-bold text-xl text-slate-800 mb-4">
             Secure Checkout
           </h3>
-          <form onSubmit={handlePayment}>
-            <p className="mb-4 text-lg">
+          <form onSubmit={handlePayment} className="space-y-4">
+            <p className="text-base text-slate-600">
               Total Due:{" "}
-              <span className="font-bold text-success">
+              <span className="font-bold text-emerald-600">
                 ${selectedAppt?.fee}
               </span>
             </p>
-            <div className="modal-action">
+            <div className="modal-action gap-2 pt-2">
               <button
                 type="button"
-                className="btn btn-ghost"
+                className="border border-slate-200 text-slate-500 hover:bg-slate-50 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200"
                 onClick={() => document.getElementById("payment_modal").close()}
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="btn btn-success text-white"
+                className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200 shadow-sm"
                 disabled={processing}
               >
                 Confirm Payment
@@ -395,24 +395,24 @@ export default function PatientAppointmentsPage() {
       {/* --- PRESCRIPTION VIEW MODAL --- */}
       <dialog
         id="prescription_modal"
-        className="modal modal-bottom sm:modal-middle"
+        className="modal modal-bottom sm:modal-middle bg-slate-900/40 backdrop-blur-sm"
       >
-        <div className="modal-box w-11/12 max-w-2xl">
-          <h3 className="font-bold text-2xl text-primary mb-2">
+        <div className="modal-box w-11/12 max-w-2xl bg-white rounded-2xl p-6 border border-slate-100">
+          <h3 className="font-bold text-xl text-slate-800 mb-2">
             Medical Prescription
           </h3>
-          <p className="text-sm text-gray-500 mb-6">
+          <p className="text-xs text-slate-400 mb-6">
             Dr. {selectedAppt?.doctorName} | {selectedAppt?.date}
           </p>
 
-          <div className="bg-base-200 p-6 rounded-lg whitespace-pre-wrap font-mono text-sm border border-base-300 min-h-[150px]">
+          <div className="bg-slate-50 p-6 rounded-xl whitespace-pre-wrap font-mono text-sm border border-slate-100 text-slate-700 min-h-[150px]">
             {selectedAppt?.prescription ||
               "No notes were provided by the doctor."}
           </div>
 
           <div className="modal-action">
             <button
-              className="btn"
+              className="border border-slate-200 text-slate-500 hover:bg-slate-50 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200"
               onClick={() =>
                 document.getElementById("prescription_modal").close()
               }
@@ -424,15 +424,15 @@ export default function PatientAppointmentsPage() {
       </dialog>
 
       {/* --- REVIEW MODAL --- */}
-      <dialog id="review_modal" className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
-          <h3 className="font-bold text-2xl text-primary mb-4">
+      <dialog id="review_modal" className="modal modal-bottom sm:modal-middle bg-slate-900/40 backdrop-blur-sm">
+        <div className="modal-box bg-white rounded-2xl p-6 border border-slate-100">
+          <h3 className="font-bold text-xl text-slate-800 mb-4">
             Rate Your Experience
           </h3>
-          <form onSubmit={handleReview}>
-            <div className="form-control mb-4">
-              <label className="label">
-                <span className="label-text font-semibold">Rating (1-5)</span>
+          <form onSubmit={handleReview} className="space-y-4">
+            <div className="form-control">
+              <label className="label text-slate-600 text-sm font-medium">
+                Rating (1-5)
               </label>
               <input
                 type="range"
@@ -440,10 +440,10 @@ export default function PatientAppointmentsPage() {
                 max="5"
                 value={rating}
                 onChange={(e) => setRating(e.target.value)}
-                className="range range-primary"
+                className="range range-info w-full"
                 step="1"
               />
-              <div className="w-full flex justify-between text-xs px-2 mt-2">
+              <div className="w-full flex justify-between text-xs text-slate-400 mt-2 px-1">
                 <span>1 ⭐️</span>
                 <span>2 ⭐️</span>
                 <span>3 ⭐️</span>
@@ -452,28 +452,28 @@ export default function PatientAppointmentsPage() {
               </div>
             </div>
             <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold">Feedback</span>
+              <label className="label text-slate-600 text-sm font-medium">
+                Feedback
               </label>
               <textarea
                 required
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                className="textarea textarea-bordered h-24"
+                className="w-full border border-slate-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 text-sm h-28"
                 placeholder="How was your consultation?"
               ></textarea>
             </div>
-            <div className="modal-action mt-6">
+            <div className="modal-action gap-2 pt-2">
               <button
                 type="button"
-                className="btn btn-ghost"
+                className="border border-slate-200 text-slate-500 hover:bg-slate-50 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200"
                 onClick={() => document.getElementById("review_modal").close()}
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="bg-sky-500 hover:bg-sky-600 text-white rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200 shadow-sm"
                 disabled={processing}
               >
                 Submit Review

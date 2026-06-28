@@ -32,45 +32,46 @@ export default function PatientProfilePage() {
   }
 
   return (
-    <div className="bg-base-100 rounded-xl shadow-xl p-6 md:p-10 max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold text-primary mb-8 border-b pb-4">
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-10 max-w-3xl mx-auto font-sans">
+      <h1 className="text-2xl font-bold text-slate-800 mb-8 border-b border-slate-100 pb-4">
         My Profile
       </h1>
 
       <div className="flex flex-col md:flex-row items-center gap-8">
         {/* Profile Image */}
         <div className="avatar">
-          <div className="w-32 md:w-48 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+          <div className="w-32 md:w-40 rounded-full overflow-hidden ring-4 ring-sky-100 shadow-md">
             <img
               src={user.photoURL || "https://via.placeholder.com/150"}
               alt={user.name}
+              className="object-cover w-full h-full"
             />
           </div>
         </div>
 
         {/* Profile Details */}
-        <div className="flex-1 space-y-4 w-full">
+        <div className="flex-grow space-y-5 w-full">
           <div>
-            <p className="text-sm text-gray-500 font-semibold uppercase">
+            <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">
               Full Name
             </p>
-            <p className="text-xl font-bold text-base-content">{user.name}</p>
+            <p className="text-lg font-bold text-slate-850">{user.name}</p>
           </div>
 
           <div>
-            <p className="text-sm text-gray-500 font-semibold uppercase">
+            <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">
               Email Address
             </p>
-            <p className="text-lg text-base-content">{user.email}</p>
+            <p className="text-base text-slate-600">{user.email}</p>
           </div>
 
           <div>
-            <p className="text-sm text-gray-500 font-semibold uppercase">
+            <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">
               Account Role
             </p>
-            <div className="badge badge-primary mt-1 capitalize">
+            <span className="inline-block bg-sky-50 text-sky-700 border border-sky-200 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mt-1">
               {user.role}
-            </div>
+            </span>
           </div>
         </div>
       </div>

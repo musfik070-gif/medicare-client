@@ -66,56 +66,59 @@ export default function AppointmentRequestsPage() {
   }
 
   return (
-    <div className="bg-base-100 rounded-xl shadow-xl p-6 md:p-10">
-      <h1 className="text-3xl font-bold text-primary mb-2">
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-10 font-sans">
+      <h1 className="text-2xl font-bold text-slate-800 mb-2">
         Appointment Requests
       </h1>
-      <p className="text-gray-500 mb-8">
+      <p className="text-slate-500 text-base mb-8">
         Manage your upcoming patient consultations.
       </p>
 
-      <div className="overflow-x-auto">
-        <table className="table table-zebra w-full">
-          <thead className="bg-base-200 text-base-content text-sm">
-            <tr>
-              <th>Patient Details</th>
-              <th>Date & Time</th>
-              <th>Status</th>
-              <th>Actions</th>
+      <div className="overflow-x-auto border border-slate-100 rounded-xl">
+        <table className="table w-full border-collapse">
+          <thead>
+            <tr className="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
+              <th className="py-4.5 px-6 font-semibold text-left">Patient Details</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Date & Time</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Status</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-slate-100">
             {appointments.map((appt) => (
-              <tr key={appt._id}>
-                <td>
-                  <div className="font-bold">
+              <tr key={appt._id} className="hover:bg-slate-50 transition-colors text-slate-700 text-sm">
+                <td className="py-4 px-6">
+                  <div className="font-bold text-slate-800">
                     {appt.patientName || "Anonymous"}
                   </div>
-                  <div className="text-sm opacity-70">{appt.patientEmail}</div>
+                  <div className="text-xs text-slate-400 mt-0.5">{appt.patientEmail}</div>
                 </td>
-                <td>
-                  <div className="font-semibold">
+                <td className="py-4 px-6">
+                  <div className="font-semibold text-slate-700">
                     {appt.date || appt.appointmentDate}
                   </div>
-                  <div className="text-sm">
+                  <div className="text-xs text-slate-400 mt-0.5">
                     {appt.time || appt.appointmentTime}
                   </div>
                 </td>
-                <td>
+                <td className="py-4 px-6">
                   <span
-                    className={`badge ${
+                    className={`text-xs font-semibold px-2.5 py-1 rounded-full uppercase border ${
                       (appt.status || appt.appointmentStatus) === "Completed"
-                        ? "badge-success"
+                        ? "bg-green-50 text-green-700 border-green-200"
                         : (appt.status || appt.appointmentStatus) ===
                             "Approved"
-                          ? "badge-info"
-                          : "badge-warning"
+                          ? "bg-sky-50 text-sky-700 border-sky-200"
+                          : (appt.status || appt.appointmentStatus) ===
+                              "Rejected"
+                            ? "bg-red-50 text-red-700 border-red-200"
+                            : "bg-amber-50 text-amber-700 border-amber-200"
                     }`}
                   >
                     {appt.status || appt.appointmentStatus || "Pending"}
                   </span>
                 </td>
-                <td>
+                <td className="py-4 px-6">
                   <div className="flex gap-2">
                     {/* Only show Accept/Reject if it's currently Pending */}
                     {(!appt.status && !appt.appointmentStatus) ||
@@ -126,7 +129,7 @@ export default function AppointmentRequestsPage() {
                           onClick={() =>
                             handleStatusChange(appt._id, "Approved")
                           }
-                          className="btn btn-sm btn-success text-white"
+                          className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200"
                         >
                           Accept
                         </button>
@@ -134,16 +137,11 @@ export default function AppointmentRequestsPage() {
                           onClick={() =>
                             handleStatusChange(appt._id, "Rejected")
                           }
-                          className="btn btn-sm btn-error text-white"
+                          className="bg-red-500 hover:bg-red-600 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200"
                         >
                           Reject
                         </button>
                       </>
-                    ) : null}
-
-                    {appt.status === "Rejected" ||
-                    appt.appointmentStatus === "Rejected" ? (
-                      <span className="text-error font-bold">Rejected</span>
                     ) : null}
 
                     {(appt.status || appt.appointmentStatus) === "Approved" && (
@@ -151,7 +149,7 @@ export default function AppointmentRequestsPage() {
                         onClick={() =>
                           handleStatusChange(appt._id, "Completed")
                         }
-                        className="btn btn-sm btn-success text-white"
+                        className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200"
                       >
                         Mark Completed
                       </button>
@@ -164,7 +162,7 @@ export default function AppointmentRequestsPage() {
         </table>
 
         {appointments.length === 0 && (
-          <div className="text-center py-10 text-gray-500">
+          <div className="text-center py-10 text-slate-400 text-sm bg-white">
             You have no appointment requests at this time.
           </div>
         )}

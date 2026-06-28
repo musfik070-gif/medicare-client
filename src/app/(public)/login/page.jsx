@@ -66,8 +66,14 @@ export default function LoginPage() {
           }
 
           // Exchange Better Auth session for the JWT token
-          const serverUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
-          const response = await fetch(`${serverUrl}/api/auth/google`, {
+          const serverUrl =
+            process.env.NEXT_PUBLIC_API_URL ||
+            process.env.NEXT_PUBLIC_SERVER_URL ||
+            "http://localhost:5001";
+          const authUrl = serverUrl.endsWith("/api/auth")
+            ? serverUrl
+            : `${serverUrl.replace(/\/$/, "")}/api/auth`;
+          const response = await fetch(`${authUrl}/google`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

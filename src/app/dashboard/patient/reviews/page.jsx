@@ -89,37 +89,37 @@ export default function MyReviewsPage() {
     );
 
   return (
-    <div className="bg-base-100 rounded-xl shadow-xl p-6 md:p-10">
-      <h1 className="text-3xl font-bold text-primary mb-6">My Reviews</h1>
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-10 font-sans">
+      <h1 className="text-2xl font-bold text-slate-800 mb-6">My Reviews</h1>
 
       {reviews.length === 0 ? (
-        <p className="text-gray-500">You haven't written any reviews yet.</p>
+        <p className="text-slate-500 text-sm">You haven't written any reviews yet.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="table w-full">
+        <div className="overflow-x-auto border border-slate-100 rounded-xl">
+          <table className="table w-full border-collapse">
             <thead>
-              <tr className="bg-base-200">
-                <th>Doctor ID / Name</th>
-                <th>Rating</th>
-                <th>Review</th>
-                <th>Actions</th>
+              <tr className="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
+                <th className="py-4.5 px-6 font-semibold text-left">Doctor ID / Name</th>
+                <th className="py-4.5 px-6 font-semibold text-left">Rating</th>
+                <th className="py-4.5 px-6 font-semibold text-left">Review</th>
+                <th className="py-4.5 px-6 font-semibold text-left">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-slate-100">
               {reviews.map((review) => (
-                <tr key={review._id}>
-                  <td className="font-semibold">
+                <tr key={review._id} className="hover:bg-slate-50 transition-colors text-slate-700 text-sm">
+                  <td className="py-4 px-6 font-semibold text-slate-800">
                     {review.doctorId || "Unknown Doctor"}
                   </td>
-                  <td className="text-warning">
+                  <td className="py-4 px-6 text-amber-400 font-semibold text-base">
                     {[...Array(5)].map((_, i) => (
                       <span key={i}>{i < review.rating ? "★" : "☆"}</span>
                     ))}
                   </td>
-                  <td className="max-w-xs truncate" title={review.reviewText}>
+                  <td className="py-4 px-6 max-w-xs truncate text-slate-500" title={review.reviewText}>
                     {review.reviewText}
                   </td>
-                  <td>
+                  <td className="py-4 px-6">
                     <div className="flex gap-2">
                       <button
                         onClick={() => {
@@ -130,13 +130,13 @@ export default function MyReviewsPage() {
                           });
                           setIsModalOpen(true);
                         }}
-                        className="btn btn-sm btn-outline btn-primary"
+                        className="border border-sky-500 text-sky-500 hover:bg-sky-50/50 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDelete(review._id)}
-                        className="btn btn-sm btn-outline btn-error"
+                        className="border border-red-500 text-red-500 hover:bg-red-50/50 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200"
                       >
                         Delete
                       </button>
@@ -151,17 +151,17 @@ export default function MyReviewsPage() {
 
       {/* Edit Modal */}
       {isModalOpen && (
-        <div className="modal modal-open">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg mb-4">Edit Review</h3>
-            <form onSubmit={handleUpdate}>
-              <div className="form-control mb-4">
-                <label className="label">Rating (1-5)</label>
+        <div className="modal modal-open bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="modal-box bg-white rounded-2xl p-6 border border-slate-100 animate-in zoom-in-95 duration-200">
+            <h3 className="font-bold text-lg text-slate-800 mb-4">Edit Review</h3>
+            <form onSubmit={handleUpdate} className="space-y-4">
+              <div className="form-control">
+                <label className="label text-slate-600 text-sm font-medium">Rating (1-5)</label>
                 <input
                   type="number"
                   min="1"
                   max="5"
-                  className="input input-bordered w-full"
+                  className="w-full border border-slate-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 text-sm"
                   value={editData.rating}
                   onChange={(e) =>
                     setEditData({ ...editData, rating: Number(e.target.value) })
@@ -169,10 +169,10 @@ export default function MyReviewsPage() {
                   required
                 />
               </div>
-              <div className="form-control mb-4">
-                <label className="label">Review Text</label>
+              <div className="form-control">
+                <label className="label text-slate-600 text-sm font-medium">Review Text</label>
                 <textarea
-                  className="textarea textarea-bordered w-full h-24"
+                  className="w-full border border-slate-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 text-sm h-28"
                   value={editData.reviewText}
                   onChange={(e) =>
                     setEditData({ ...editData, reviewText: e.target.value })
@@ -180,15 +180,15 @@ export default function MyReviewsPage() {
                   required
                 ></textarea>
               </div>
-              <div className="modal-action">
+              <div className="modal-action gap-2 pt-2">
                 <button
                   type="button"
-                  className="btn"
+                  className="border border-slate-200 text-slate-500 hover:bg-slate-50 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200"
                   onClick={() => setIsModalOpen(false)}
                 >
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="bg-sky-500 hover:bg-sky-600 text-white rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200 shadow-sm">
                   Save Changes
                 </button>
               </div>

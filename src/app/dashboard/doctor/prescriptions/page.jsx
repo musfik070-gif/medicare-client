@@ -92,40 +92,40 @@ export default function DoctorPrescriptionsPage() {
   }
 
   return (
-    <div className="bg-base-100 rounded-xl shadow-xl p-6 md:p-10">
-      <h1 className="text-3xl font-bold text-primary mb-2">
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-10 font-sans">
+      <h1 className="text-2xl font-bold text-slate-800 mb-2">
         Patient Prescriptions
       </h1>
-      <p className="text-gray-500 mb-8">
+      <p className="text-slate-500 text-base mb-8">
         Write medical notes and prescribe medicine for your confirmed patients.
       </p>
 
-      <div className="overflow-x-auto">
-        <table className="table table-zebra w-full">
-          <thead className="bg-base-200 text-base-content text-sm">
-            <tr>
-              <th>Patient</th>
-              <th>Date</th>
-              <th>Prescription Status</th>
-              <th>Actions</th>
+      <div className="overflow-x-auto border border-slate-100 rounded-xl">
+        <table className="table w-full border-collapse">
+          <thead>
+            <tr className="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
+              <th className="py-4.5 px-6 font-semibold text-left">Patient</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Date</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Prescription Status</th>
+              <th className="py-4.5 px-6 font-semibold text-left">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-slate-100">
             {appointments.map((appt) => (
-              <tr key={appt._id}>
-                <td className="font-bold">{appt.patientName || "Anonymous"}</td>
-                <td>{appt.date || appt.appointmentDate}</td>
-                <td>
+              <tr key={appt._id} className="hover:bg-slate-50 transition-colors text-slate-700 text-sm">
+                <td className="py-4 px-6 font-bold text-slate-800">{appt.patientName || "Anonymous"}</td>
+                <td className="py-4 px-6 text-slate-500">{appt.date || appt.appointmentDate}</td>
+                <td className="py-4 px-6">
                   {appt.prescription ? (
-                    <span className="badge badge-success">Provided</span>
+                    <span className="bg-green-50 text-green-700 border border-green-200 text-xs font-semibold px-2.5 py-1 rounded-full uppercase">Provided</span>
                   ) : (
-                    <span className="badge badge-warning">Pending</span>
+                    <span className="bg-amber-50 text-amber-700 border border-amber-200 text-xs font-semibold px-2.5 py-1 rounded-full uppercase">Pending</span>
                   )}
                 </td>
-                <td>
+                <td className="py-4 px-6">
                   <button
                     onClick={() => openPrescriptionModal(appt)}
-                    className="btn btn-sm btn-primary"
+                    className="bg-sky-500 hover:bg-sky-600 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200 shadow-sm"
                   >
                     {appt.prescription
                       ? "Edit Prescription"
@@ -138,7 +138,7 @@ export default function DoctorPrescriptionsPage() {
         </table>
 
         {appointments.length === 0 && (
-          <div className="text-center py-10 text-gray-500">
+          <div className="text-center py-10 text-slate-400 text-sm bg-white">
             No approved appointments to prescribe for.
           </div>
         )}
@@ -146,25 +146,25 @@ export default function DoctorPrescriptionsPage() {
 
       {/* Prescription Modal */}
       {isModalOpen && (
-        <div className="modal modal-open">
-          <div className="modal-box w-11/12 max-w-3xl">
-            <h3 className="font-bold text-lg mb-4">
+        <div className="modal modal-open bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="modal-box w-11/12 max-w-3xl bg-white rounded-2xl p-6 border border-slate-100 animate-in zoom-in-95 duration-200">
+            <h3 className="font-bold text-lg text-slate-800 mb-4">
               Prescription for {selectedAppt?.patientName || "Anonymous"}
             </h3>
-            <form onSubmit={handleSavePrescription}>
-              <div className="form-control mb-4">
+            <form onSubmit={handleSavePrescription} className="space-y-4">
+              <div className="form-control">
                 <textarea
-                  className="textarea textarea-bordered w-full h-48"
+                  className="w-full border border-slate-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 text-sm h-48"
                   placeholder="Enter medicines, dosage, and advice here..."
                   value={prescriptionText}
                   onChange={(e) => setPrescriptionText(e.target.value)}
                   required
                 ></textarea>
               </div>
-              <div className="modal-action">
+              <div className="modal-action gap-2 pt-2">
                 <button
                   type="button"
-                  className="btn"
+                  className="border border-slate-200 text-slate-500 hover:bg-slate-50 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200"
                   onClick={() => setIsModalOpen(false)}
                   disabled={saving}
                 >
@@ -172,11 +172,11 @@ export default function DoctorPrescriptionsPage() {
                 </button>
                 <button
                   type="submit"
-                  className="btn btn-primary"
+                  className="bg-sky-500 hover:bg-sky-600 text-white rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200 shadow-sm"
                   disabled={saving}
                 >
                   {saving ? (
-                    <span className="loading loading-spinner"></span>
+                    <span className="loading loading-spinner text-white loading-sm"></span>
                   ) : (
                     "Save & Send"
                   )}

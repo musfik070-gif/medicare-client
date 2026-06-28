@@ -115,41 +115,45 @@ export default function DoctorProfilePage() {
   }
 
   return (
-    <div className="bg-base-100 rounded-xl shadow-xl p-6 md:p-10 max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold text-primary mb-2">
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-10 max-w-3xl mx-auto font-sans">
+      <h1 className="text-2xl font-bold text-slate-800 mb-2">
         My Professional Profile
       </h1>
-      <p className="text-gray-500 mb-8">
+      <p className="text-slate-500 text-base mb-8">
         Update your details. These will be visible to patients once verified.
       </p>
 
       {message && (
         <div
-          className={`alert ${message.includes("success") ? "alert-success" : "alert-error"} mb-6`}
+          className={`border p-4 rounded-xl text-sm mb-6 ${
+            message.includes("successfully")
+              ? "bg-green-50 text-green-700 border-green-200"
+              : "bg-red-50 text-red-700 border-red-200"
+          }`}
         >
           <span>{message}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div className="form-control">
-          <label className="label">
-            <span className="label-text font-semibold">Full Name / Title</span>
+          <label className="label py-1">
+            <span className="text-slate-600 text-sm font-medium">Full Name / Title</span>
           </label>
           <input
             type="text"
             name="doctorName"
             value={formData.doctorName}
             onChange={handleChange}
-            className="input input-bordered w-full"
+            className="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 placeholder-slate-400 text-sm"
             required
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Specialization</span>
+            <label className="label py-1">
+              <span className="text-slate-600 text-sm font-medium">Specialization</span>
             </label>
             <input
               type="text"
@@ -157,13 +161,13 @@ export default function DoctorProfilePage() {
               value={formData.specialization}
               onChange={handleChange}
               placeholder="e.g. Cardiology"
-              className="input input-bordered w-full"
+              className="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 placeholder-slate-400 text-sm"
               required
             />
           </div>
           <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">
+            <label className="label py-1">
+              <span className="text-slate-600 text-sm font-medium">
                 Experience (Years)
               </span>
             </label>
@@ -172,16 +176,16 @@ export default function DoctorProfilePage() {
               name="experience"
               value={formData.experience}
               onChange={handleChange}
-              className="input input-bordered w-full"
+              className="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 placeholder-slate-400 text-sm"
               required
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">
+            <label className="label py-1">
+              <span className="text-slate-600 text-sm font-medium">
                 Consultation Fee ($)
               </span>
             </label>
@@ -190,13 +194,13 @@ export default function DoctorProfilePage() {
               name="consultationFee"
               value={formData.consultationFee}
               onChange={handleChange}
-              className="input input-bordered w-full"
+              className="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 placeholder-slate-400 text-sm"
               required
             />
           </div>
           <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">
+            <label className="label py-1">
+              <span className="text-slate-600 text-sm font-medium">
                 Hospital / Clinic Name
               </span>
             </label>
@@ -205,15 +209,15 @@ export default function DoctorProfilePage() {
               name="hospitalName"
               value={formData.hospitalName}
               onChange={handleChange}
-              className="input input-bordered w-full"
+              className="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 placeholder-slate-400 text-sm"
               required
             />
           </div>
         </div>
 
         <div className="form-control">
-          <label className="label">
-            <span className="label-text font-semibold">Qualifications</span>
+          <label className="label py-1">
+            <span className="text-slate-600 text-sm font-medium">Qualifications</span>
           </label>
           <input
             type="text"
@@ -221,14 +225,14 @@ export default function DoctorProfilePage() {
             value={formData.qualifications}
             onChange={handleChange}
             placeholder="e.g. MBBS, MD"
-            className="input input-bordered w-full"
+            className="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 placeholder-slate-400 text-sm"
             required
           />
         </div>
 
         <div className="form-control">
-          <label className="label">
-            <span className="label-text font-semibold">Available Days</span>
+          <label className="label py-1">
+            <span className="text-slate-600 text-sm font-medium">Available Days</span>
           </label>
           <input
             type="text"
@@ -236,21 +240,21 @@ export default function DoctorProfilePage() {
             value={formData.availableDays}
             onChange={handleChange}
             placeholder="e.g. Monday, Wednesday, Friday"
-            className="input input-bordered w-full"
+            className="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 placeholder-slate-400 text-sm"
             required
           />
         </div>
 
         <div className="form-control">
-          <label className="label">
-            <span className="label-text font-semibold">Profile Image URL</span>
+          <label className="label py-1">
+            <span className="text-slate-600 text-sm font-medium">Profile Image URL</span>
           </label>
           <input
             type="url"
             name="profileImage"
             value={formData.profileImage}
             onChange={handleChange}
-            className="input input-bordered w-full"
+            className="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 placeholder-slate-400 text-sm"
             required
           />
         </div>
@@ -258,11 +262,11 @@ export default function DoctorProfilePage() {
         <div className="form-control mt-8">
           <button
             type="submit"
-            className="btn btn-primary w-full"
+            className="w-full bg-sky-500 hover:bg-sky-600 text-white rounded-xl py-3 font-semibold transition-all duration-200 shadow-sm hover:shadow-md text-sm"
             disabled={saving}
           >
             {saving ? (
-              <span className="loading loading-spinner"></span>
+              <span className="loading loading-spinner text-white loading-sm"></span>
             ) : (
               "Save Profile"
             )}
