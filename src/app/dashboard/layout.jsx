@@ -9,6 +9,9 @@ export default function DashboardLayout({ children }) {
   const [user, setUser] = useState(null);
   const router = useRouter();
   const pathname = usePathname();
+  const fallbackAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+    user?.name || "User",
+  )}&background=0ea5e9&color=fff`;
 
   // Load the user from local storage so we know what links to show
   useEffect(() => {
@@ -33,7 +36,7 @@ export default function DashboardLayout({ children }) {
 
   return (
     <ProtectedRoute>
-      <div className="drawer lg:drawer-open">
+      <div className="drawer lg:drawer-open dashboard-theme-fix">
         <input
           id="dashboard-drawer"
           type="checkbox"
@@ -93,8 +96,11 @@ export default function DashboardLayout({ children }) {
               <div className="avatar mb-3">
                 <div className="w-20 rounded-full ring-4 ring-sky-100 dark:ring-slate-800 shadow-md">
                   <img
-                    src={user?.photoURL || "https://via.placeholder.com/150"}
-                    alt="Profile"
+                    src={user?.photoURL || user?.profileImage || fallbackAvatar}
+                    alt={user?.name || "Profile"}
+                    onError={(event) => {
+                      event.currentTarget.src = fallbackAvatar;
+                    }}
                   />
                 </div>
               </div>

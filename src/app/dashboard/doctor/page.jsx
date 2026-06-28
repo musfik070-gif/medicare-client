@@ -87,7 +87,7 @@ export default function DoctorDashboardOverview() {
         <h1 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">
           Welcome back, Dr. {userName}!
         </h1>
-        <p className="text-slate-505 dark:text-slate-400 text-base">
+        <p className="text-slate-500 dark:text-slate-400 text-base">
           Here is an overview of your medical practice.
         </p>
       </div>
@@ -128,7 +128,7 @@ export default function DoctorDashboardOverview() {
           </div>
           <div>
             <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider">
-              Today's Appointments
+              Today&apos;s Appointments
             </h2>
             <p className="text-3xl font-bold text-slate-800 dark:text-white mt-1">{stats.todaysAppointments}</p>
           </div>

@@ -91,7 +91,7 @@ export default function PatientDashboardOverview() {
         <h1 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">
           Welcome back, {userName}!
         </h1>
-        <p className="text-slate-505 dark:text-slate-400 text-base">
+        <p className="text-slate-500 dark:text-slate-400 text-base">
           Here is an overview of your healthcare journey.
         </p>
       </div>

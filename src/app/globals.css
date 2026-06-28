@@ -2,3 +2,51 @@
 @plugin "daisyui";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+.dark .dashboard-theme-fix .bg-white,
+.dark .dashboard-theme-fix .bg-slate-50,
+.dark .dashboard-theme-fix .bg-slate-50\/50 {
+  background-color: var(--color-base-100);
+}
+
+.dark .dashboard-theme-fix .bg-base-100,
+.dark .dashboard-theme-fix .modal-box {
+  background-color: var(--color-base-100);
+  color: var(--color-base-content);
+}
+
+.dark .dashboard-theme-fix .bg-base-200 {
+  background-color: var(--color-base-200);
+}
+
+.dark .dashboard-theme-fix .text-slate-800,
+.dark .dashboard-theme-fix .text-slate-850,
+.dark .dashboard-theme-fix .text-slate-700,
+.dark .dashboard-theme-fix .text-slate-600 {
+  color: var(--color-base-content);
+}
+
+.dark .dashboard-theme-fix .text-slate-500,
+.dark .dashboard-theme-fix .text-slate-400,
+.dark .dashboard-theme-fix .text-gray-500 {
+  color: color-mix(in oklab, var(--color-base-content) 68%, transparent);
+}
+
+.dark .dashboard-theme-fix .border-slate-100,
+.dark .dashboard-theme-fix .border-slate-200,
+.dark .dashboard-theme-fix .border-base-300 {
+  border-color: var(--color-base-300);
+}
+
+.dark .dashboard-theme-fix input,
+.dark .dashboard-theme-fix textarea,
+.dark .dashboard-theme-fix select {
+  background-color: var(--color-base-200);
+  color: var(--color-base-content);
+  border-color: var(--color-base-300);
+}
+
+.dark .dashboard-theme-fix input::placeholder,
+.dark .dashboard-theme-fix textarea::placeholder {
+  color: color-mix(in oklab, var(--color-base-content) 45%, transparent);
+}

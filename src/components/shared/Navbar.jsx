@@ -125,20 +125,40 @@ export default function Navbar() {
 
           {user ? (
             <div className="dropdown dropdown-end">
-              <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar ring-2 ring-sky-100 dark:ring-slate-800 hover:ring-sky-300 dark:hover:ring-slate-700 transition-all duration-200 min-h-[44px] min-w-[44px]">
-                <div className="w-10 rounded-full">
-                  <img
-                    alt={user.name || "User profile"}
-                    src={user.photoURL || "https://via.placeholder.com/150"}
-                  />
-                </div>
+              <div
+                tabIndex={0}
+                role="button"
+                className="flex items-center justify-center flex-shrink-0"
+              >
+                {(user?.photoURL || user?.image) ? (
+                  <>
+                    <img
+                      src={user.photoURL || user.image}
+                      alt={user.name || "User"}
+                      className="w-10 h-10 rounded-full object-cover border-2 border-sky-200 cursor-pointer flex-shrink-0"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        if (e.target.nextSibling) {
+                          e.target.nextSibling.style.display = 'flex';
+                        }
+                      }}
+                    />
+                    <div className="w-10 h-10 rounded-full bg-sky-500 text-white hidden items-center justify-center font-semibold text-sm cursor-pointer flex-shrink-0 border-2 border-sky-200">
+                      {user?.name?.charAt(0).toUpperCase() || 'U'}
+                    </div>
+                  </>
+                ) : (
+                  <div className="w-10 h-10 rounded-full bg-sky-500 text-white flex items-center justify-center font-semibold text-sm cursor-pointer flex-shrink-0 border-2 border-sky-200">
+                    {user?.name?.charAt(0).toUpperCase() || 'U'}
+                  </div>
+                )}
               </div>
               <ul
                 tabIndex={0}
                 className="menu dropdown-content bg-white dark:bg-slate-800 rounded-2xl z-[100] mt-3 w-56 p-3 shadow-xl border border-slate-100 dark:border-slate-750 animate-in fade-in zoom-in-95 duration-200"
               >
                 <li className="px-4 py-2.5 border-b border-slate-100 dark:border-slate-700 mb-2">
-                  <span className="block p-0 font-semibold text-slate-800 dark:text-white text-sm">{user.name || "User"}</span>
+                  <span className="block p-0 text-sm font-semibold text-slate-800 dark:text-white">{user.name || "User"}</span>
                   <span className="block p-0 text-xs text-slate-400 dark:text-slate-500 mt-0.5 break-all">{user.email}</span>
                 </li>
                 <li>
