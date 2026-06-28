@@ -287,44 +287,69 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Static Why Choose Us */}
-      <motion.section
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="py-20 bg-base-100"
-      >
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-12">
-            Why Choose MediCare Connect?
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 rounded-2xl border border-base-200 bg-base-100 shadow-sm">
-              <div className="text-4xl mb-4">⚡</div>
-              <h3 className="text-xl font-bold mb-3">Zero Waiting Time</h3>
-              <p className="text-base-content/65 leading-relaxed">
-                Book appointments instantly and skip the long hospital queues.
+      {/* 6. Why Choose MediCare Connect (Static) */}
+      <div className="py-20 bg-base-200">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="flex flex-col md:flex-row items-center gap-12">
+            <div className="md:w-1/2">
+              <h2 className="text-4xl font-bold text-primary mb-6">
+                Why Choose MediCare Connect?
+              </h2>
+              <p className="text-lg text-gray-600 mb-6">
+                We bring the clinic to your fingertips. Our platform is designed
+                to eliminate long waiting room hours and complicated paperwork,
+                offering a seamless and secure healthcare experience.
               </p>
+
+              <ul className="space-y-4">
+                <li className="flex items-center gap-3 text-gray-700">
+                  <span className="text-success text-xl">✔</span>
+                  <strong>Verified Specialists:</strong> Every doctor on our
+                  platform is thoroughly vetted by our admin team.
+                </li>
+                <li className="flex items-center gap-3 text-gray-700">
+                  <span className="text-success text-xl">✔</span>
+                  <strong>Secure Medical Records:</strong> Your prescriptions and
+                  appointment history are safely stored.
+                </li>
+                <li className="flex items-center gap-3 text-gray-700">
+                  <span className="text-success text-xl">✔</span>
+                  <strong>Instant Online Booking:</strong> Pick a date and time
+                  that works for you without calling the clinic.
+                </li>
+                <li className="flex items-center gap-3 text-gray-700">
+                  <span className="text-success text-xl">✔</span>
+                  <strong>Transparent Pricing:</strong> Know your consultation
+                  fee upfront and pay securely online.
+                </li>
+              </ul>
             </div>
-            <div className="p-8 rounded-2xl border border-base-200 bg-base-100 shadow-sm">
-              <div className="text-4xl mb-4">👨‍⚕️</div>
-              <h3 className="text-xl font-bold mb-3">Verified Doctors</h3>
-              <p className="text-base-content/65 leading-relaxed">
-                Every doctor on our platform is strictly verified by our admin
-                team.
-              </p>
-            </div>
-            <div className="p-8 rounded-2xl border border-base-200 bg-base-100 shadow-sm">
-              <div className="text-4xl mb-4">🔒</div>
-              <h3 className="text-xl font-bold mb-3">Secure Payments</h3>
-              <p className="text-base-content/65 leading-relaxed">
-                Your transactions and medical records are kept 100% secure.
-              </p>
+
+            <div className="md:w-1/2 grid grid-cols-2 gap-4">
+              <div className="bg-primary text-primary-content p-6 rounded-xl shadow-lg text-center transform translate-y-4">
+                <div className="text-4xl mb-2">⏱️</div>
+                <h3 className="font-bold text-lg">Save Time</h3>
+                <p className="text-sm opacity-80">Skip the waiting room</p>
+              </div>
+              <div className="bg-secondary text-secondary-content p-6 rounded-xl shadow-lg text-center">
+                <div className="text-4xl mb-2">🔒</div>
+                <h3 className="font-bold text-lg">Secure</h3>
+                <p className="text-sm opacity-80">Data privacy first</p>
+              </div>
+              <div className="bg-accent text-accent-content p-6 rounded-xl shadow-lg text-center transform translate-y-4">
+                <div className="text-4xl mb-2">👨‍⚕️</div>
+                <h3 className="font-bold text-lg">Top Doctors</h3>
+                <p className="text-sm opacity-80">Expert medical care</p>
+              </div>
+              <div className="bg-base-100 text-base-content p-6 rounded-xl shadow-lg border border-base-300 text-center">
+                <div className="text-4xl mb-2">💻</div>
+                <h3 className="font-bold text-lg">Digital</h3>
+                <p className="text-sm opacity-80">Manage from anywhere</p>
+              </div>
             </div>
           </div>
         </div>
-      </motion.section>
+      </div>
       <Footer />
     </div>
   );
