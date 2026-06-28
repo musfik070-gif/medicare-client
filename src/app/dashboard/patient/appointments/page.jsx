@@ -6,6 +6,12 @@ import Link from "next/link";
 export default function PatientAppointmentsPage() {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [rescheduleData, setRescheduleData] = useState({
+    id: null,
+    date: "",
+    time: "",
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Modals State
   const [selectedAppt, setSelectedAppt] = useState(null);
@@ -52,6 +58,60 @@ export default function PatientAppointmentsPage() {
     setRating(5);
     setComment("");
     document.getElementById("review_modal").showModal();
+  };
+
+  const handleCancel = async (id) => {
+    if (!window.confirm("Are you sure you want to cancel this appointment?"))
+      return;
+
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`http://localhost:5001/api/appointments/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ status: "Cancelled" }),
+      });
+      const result = await res.json();
+      if (result.success) {
+        alert("Appointment Cancelled.");
+        fetchAppointments();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleReschedule = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(
+        `http://localhost:5001/api/appointments/${rescheduleData.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            appointmentDate: rescheduleData.date,
+            appointmentTime: rescheduleData.time,
+            status: "Pending",
+          }),
+        },
+      );
+      const result = await res.json();
+      if (result.success) {
+        alert("Appointment Rescheduled!");
+        setIsModalOpen(false);
+        fetchAppointments();
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // --- HANDLERS ---
@@ -179,7 +239,7 @@ export default function PatientAppointmentsPage() {
                   </span>
                 </td>
                 <td>
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     {appt.status === "Approved" && (
                       <button
                         onClick={() => openPaymentModal(appt)}
@@ -204,6 +264,33 @@ export default function PatientAppointmentsPage() {
                         </button>
                       </>
                     )}
+                    {(appt.status === "Pending" ||
+                      appt.status === "Approved") && (
+                      <>
+                        <button
+                          onClick={() => {
+                            setRescheduleData({
+                              id: appt._id,
+                              date: appt.date,
+                              time: appt.time,
+                            });
+                            setIsModalOpen(true);
+                          }}
+                          className="btn btn-sm btn-outline btn-primary"
+                        >
+                          Reschedule
+                        </button>
+                        <button
+                          onClick={() => handleCancel(appt._id)}
+                          className="btn btn-sm btn-outline btn-error"
+                        >
+                          Cancel
+                        </button>
+                      </>
+                    )}
+                    {appt.status === "Cancelled" && (
+                      <span className="text-error font-bold">Cancelled</span>
+                    )}
                   </div>
                 </td>
               </tr>
@@ -211,6 +298,58 @@ export default function PatientAppointmentsPage() {
           </tbody>
         </table>
       </div>
+
+      {isModalOpen && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg mb-4">Reschedule Appointment</h3>
+            <form onSubmit={handleReschedule}>
+              <div className="form-control mb-4">
+                <label className="label">New Date</label>
+                <input
+                  type="date"
+                  className="input input-bordered w-full"
+                  required
+                  value={rescheduleData.date}
+                  onChange={(e) =>
+                    setRescheduleData({
+                      ...rescheduleData,
+                      date: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="form-control mb-4">
+                <label className="label">New Time</label>
+                <input
+                  type="time"
+                  className="input input-bordered w-full"
+                  required
+                  value={rescheduleData.time}
+                  onChange={(e) =>
+                    setRescheduleData({
+                      ...rescheduleData,
+                      time: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="modal-action">
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Close
+                </button>
+                <button type="submit" className="btn btn-primary">
+                  Confirm Reschedule
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* --- PAYMENT MODAL (Same as Step 22) --- */}
       <dialog id="payment_modal" className="modal modal-bottom sm:modal-middle">
