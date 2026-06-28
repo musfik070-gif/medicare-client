@@ -74,13 +74,17 @@ export default function PatientAppointmentsPage() {
         },
         body: JSON.stringify({ status: "Cancelled" }),
       });
+
       const result = await res.json();
       if (result.success) {
         alert("Appointment Cancelled.");
-        fetchAppointments();
+        window.location.reload();
+      } else {
+        alert(result.message || "Failed to cancel.");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Cancel Error:", error);
+      alert("An error occurred. Check browser console.");
     }
   };
 
@@ -103,14 +107,18 @@ export default function PatientAppointmentsPage() {
           }),
         },
       );
+
       const result = await res.json();
       if (result.success) {
         alert("Appointment Rescheduled!");
         setIsModalOpen(false);
-        fetchAppointments();
+        window.location.reload();
+      } else {
+        alert(result.message || "Failed to reschedule.");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Reschedule Error:", error);
+      alert("An error occurred. Check browser console.");
     }
   };
 
