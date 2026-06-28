@@ -64,29 +64,29 @@ export default function FindDoctorsPage() {
         </div>
 
         {/* Search and Filter Section */}
-        <div className="card bg-white shadow-sm mb-10 p-6 border border-slate-100 rounded-2xl">
+        <div className="card bg-white shadow-sm mb-10 p-4 md:p-6 border border-slate-100 rounded-2xl">
           <form
             onSubmit={handleSearch}
             className="flex flex-col md:flex-row gap-4 items-center justify-between"
           >
             <div className="form-control w-full md:w-2/3">
-              <div className="flex w-full">
+              <div className="flex flex-col sm:flex-row w-full gap-3">
                 <input
                   type="text"
                   placeholder="Search by name or specialization (e.g., Cardiology)..."
-                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 placeholder-slate-400 text-sm"
+                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 placeholder-slate-400 text-sm min-h-[44px]"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
-                <button type="submit" className="ml-3 bg-sky-500 hover:bg-sky-600 text-white rounded-xl px-6 py-2.5 font-medium transition-all duration-200 shadow-sm hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-sm">
+                <button type="submit" className="w-full sm:w-auto bg-sky-500 hover:bg-sky-600 text-white rounded-xl px-6 py-2.5 font-medium transition-all duration-200 shadow-sm hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-sm min-h-[44px]">
                   Search
                 </button>
               </div>
             </div>
 
-            <div className="form-control w-full md:w-1/3 mt-4 md:mt-0">
+            <div className="form-control w-full md:w-1/3">
               <select
-                className="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-700 bg-white text-sm"
+                className="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-700 bg-white text-sm min-h-[44px]"
                 value={sort}
                 onChange={(e) => {
                   setSort(e.target.value);
@@ -118,7 +118,7 @@ export default function FindDoctorsPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {doctors.map((doctor) => (
               <div
                 key={doctor._id}

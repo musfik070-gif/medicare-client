@@ -70,7 +70,7 @@ export default function HomePage() {
             <span className="text-sky-500 text-sm font-semibold uppercase tracking-widest mb-4 block">
               WELCOME TO MEDICARE CONNECT
             </span>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight leading-tight">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight leading-tight">
               Your Health, <span className="text-sky-500">Our Priority</span>
             </h1>
             <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
@@ -93,7 +93,7 @@ export default function HomePage() {
 
       {/* 2. Animated Featured Doctors Section */}
       <motion.div
-        className="py-20 bg-white"
+        className="py-12 md:py-20 bg-white"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -104,20 +104,20 @@ export default function HomePage() {
             <span className="text-sky-500 text-sm font-semibold uppercase tracking-widest mb-2 block">
               MEET OUR TEAM
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
+            <h2 className="text-2xl md:text-4xl font-bold text-slate-900">
               Featured Specialists
             </h2>
-            <p className="text-slate-500 text-base mt-2 max-w-xl mx-auto">
+            <p className="text-slate-500 text-sm md:text-base mt-2 max-w-xl mx-auto">
               Access highly recommended healthcare practitioners with verified reviews and proven experiences.
             </p>
           </div>
 
           {homeData?.featuredDoctors?.length === 0 ? (
-            <p className="text-center text-slate-400 py-12">
+            <p className="text-center text-slate-400 py-12 text-sm">
               More doctors joining soon!
             </p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {homeData?.featuredDoctors?.map((doctor) => (
                 <div
                   key={doctor._id}
@@ -166,22 +166,22 @@ export default function HomePage() {
       </motion.div>
 
       {/* 3. Medical Specializations Section (Static) */}
-      <div className="py-20 bg-slate-50 border-y border-slate-100">
+      <div className="py-12 md:py-20 bg-slate-50 border-y border-slate-100">
         <div className="container mx-auto px-4 max-w-6xl text-center">
           <div className="mb-12">
             <span className="text-sky-500 text-sm font-semibold uppercase tracking-widest mb-2 block">
               OUR DEPARTMENTS
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
+            <h2 className="text-2xl md:text-4xl font-bold text-slate-900">
               Our Medical Specializations
             </h2>
-            <p className="text-slate-500 text-base mt-2 max-w-xl mx-auto">
+            <p className="text-slate-500 text-sm md:text-base mt-2 max-w-xl mx-auto">
               Find expert care across a wide range of medical fields. Our platform
               connects you with top-rated specialists in these key departments.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             <div className="card bg-white shadow-sm border border-slate-100 hover:bg-sky-500 hover:text-white transition-all duration-300 hover:shadow-md py-8 cursor-pointer group rounded-2xl">
               <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-200">❤️</div>
               <h3 className="font-bold text-lg group-hover:text-white text-slate-800 transition-colors">Cardiology</h3>
@@ -212,7 +212,7 @@ export default function HomePage() {
 
       {/* 4. Dynamic Patient Success Stories Section */}
       <motion.div
-        className="py-20 bg-white"
+        className="py-12 md:py-20 bg-white"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -223,16 +223,16 @@ export default function HomePage() {
             <span className="text-sky-500 text-sm font-semibold uppercase tracking-widest mb-2 block">
               PATIENT TESTIMONIALS
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
+            <h2 className="text-2xl md:text-4xl font-bold text-slate-900">
               Patient Success Stories
             </h2>
-            <p className="text-slate-500 text-base mt-2 max-w-xl mx-auto">
+            <p className="text-slate-500 text-sm md:text-base mt-2 max-w-xl mx-auto">
               Read what our patients have to say about their experiences with our
               top-rated specialists.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {reviews.map((review) => (
               <div
                 key={review._id}
@@ -274,16 +274,16 @@ export default function HomePage() {
       </motion.div>
 
       {/* 5. Dynamic Platform Statistics */}
-      <section className="py-20 bg-gradient-to-br from-sky-600 to-sky-800 text-white relative">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-sky-600 to-sky-800 text-white relative">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.05),transparent)] pointer-events-none"></div>
         <div className="container mx-auto px-4 max-w-6xl text-center relative z-10">
           <span className="text-sky-200 text-sm font-semibold uppercase tracking-widest mb-3 block">
             GROWING STRONG
           </span>
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-12 tracking-tight">
+          <h2 className="text-2xl md:text-4xl font-extrabold mb-12 tracking-tight">
             Platform Statistics
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="stat bg-white/10 rounded-2xl shadow-sm border border-white/10 p-6 backdrop-blur-sm transition-all duration-200 hover:-translate-y-1">
               <div className="stat-title text-sky-100/80 text-sm font-medium">
                 Total Doctors
@@ -321,7 +321,7 @@ export default function HomePage() {
       </section>
 
       {/* 6. Why Choose MediCare Connect (Static) */}
-      <div className="py-20 bg-slate-50">
+      <div className="py-12 md:py-20 bg-slate-50">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="md:w-1/2">

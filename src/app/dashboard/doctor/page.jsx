@@ -82,7 +82,7 @@ export default function DoctorDashboardOverview() {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-10">
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-6 md:p-10 font-sans">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-slate-800 mb-2">
           Welcome back, Dr. {userName}!
@@ -93,7 +93,7 @@ export default function DoctorDashboardOverview() {
       </div>
 
       {/* Dashboard Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
         {/* Total Patients */}
         <div className="card bg-white rounded-2xl border border-slate-100 border-l-4 border-sky-500 hover:shadow-md transition-all duration-200 shadow-sm flex flex-col justify-between p-6">
           <div className="flex items-center justify-between mb-4">

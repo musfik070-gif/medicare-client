@@ -125,11 +125,15 @@ export default function DoctorPrescriptionsPage() {
                 <td className="py-4 px-6">
                   <button
                     onClick={() => openPrescriptionModal(appt)}
-                    className="bg-sky-500 hover:bg-sky-600 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200 shadow-sm"
+                    className="bg-sky-500 hover:bg-sky-600 text-white rounded-lg px-2.5 py-1.5 md:px-3 text-xs font-semibold transition-all duration-200 shadow-sm flex items-center gap-1.5 min-h-[44px]"
+                    title={appt.prescription ? "Edit Prescription" : "Write Prescription"}
                   >
-                    {appt.prescription
-                      ? "Edit Prescription"
-                      : "Write Prescription"}
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                    <span className="hidden md:inline">
+                      {appt.prescription ? "Edit" : "Prescribe"}
+                    </span>
                   </button>
                 </td>
               </tr>

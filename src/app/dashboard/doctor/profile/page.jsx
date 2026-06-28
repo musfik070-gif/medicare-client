@@ -262,7 +262,7 @@ export default function DoctorProfilePage() {
         <div className="form-control mt-8">
           <button
             type="submit"
-            className="w-full bg-sky-500 hover:bg-sky-600 text-white rounded-xl py-3 font-semibold transition-all duration-200 shadow-sm hover:shadow-md text-sm"
+            className="w-full md:w-auto md:px-8 bg-sky-500 hover:bg-sky-600 text-white rounded-xl py-3 font-semibold transition-all duration-200 shadow-sm hover:shadow-md text-sm min-h-[44px]"
             disabled={saving}
           >
             {saving ? (

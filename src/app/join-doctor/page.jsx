@@ -69,50 +69,50 @@ export default function JoinDoctorPage() {
   if (!user) return null; // Wait for redirect
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center bg-base-200 py-12 px-4">
-      <div className="card w-full max-w-2xl shadow-2xl bg-base-100">
-        <div className="card-body">
-          <h2 className="text-3xl font-bold text-center text-primary mb-2">
+    <div className="min-h-[85vh] flex items-center justify-center bg-slate-50 py-12 px-4 font-sans">
+      <div className="card w-full max-w-2xl shadow-sm bg-white border border-slate-100 rounded-2xl overflow-hidden">
+        <div className="card-body p-6 sm:p-10">
+          <h2 className="text-2xl font-bold text-center text-slate-800 mb-2">
             Apply to be a Doctor
           </h2>
-          <p className="text-center text-gray-500 mb-6">
+          <p className="text-center text-slate-500 mb-8 text-sm">
             Join our network of verified medical professionals.
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Full Name</span>
+                <label className="label py-1">
+                  <span className="text-slate-600 text-sm font-medium">Full Name</span>
                 </label>
                 <input
                   type="text"
                   value={user.name}
                   disabled
-                  className="input input-bordered bg-base-200"
+                  className="w-full border border-slate-100 rounded-xl px-4 py-2.5 bg-slate-50 text-slate-500 text-sm min-h-[44px] cursor-not-allowed"
                 />
               </div>
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
+                <label className="label py-1">
+                  <span className="text-slate-600 text-sm font-medium">Email</span>
                 </label>
                 <input
                   type="email"
                   value={user.email}
                   disabled
-                  className="input input-bordered bg-base-200"
+                  className="w-full border border-slate-100 rounded-xl px-4 py-2.5 bg-slate-50 text-slate-500 text-sm min-h-[44px] cursor-not-allowed"
                 />
               </div>
             </div>
 
             <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold">Specialization</span>
+              <label className="label py-1">
+                <span className="text-slate-600 text-sm font-medium">Specialization</span>
               </label>
               <select
                 name="specialization"
                 required
-                className="select select-bordered w-full"
+                className="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-700 bg-white text-sm min-h-[44px]"
                 value={formData.specialization}
                 onChange={handleChange}
               >
@@ -128,10 +128,10 @@ export default function JoinDoctorPage() {
               </select>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold">
+                <label className="label py-1">
+                  <span className="text-slate-600 text-sm font-medium">
                     Years of Experience
                   </span>
                 </label>
@@ -139,15 +139,15 @@ export default function JoinDoctorPage() {
                   type="text"
                   name="experience"
                   required
-                  placeholder="e.g., 5 Years"
+                  placeholder="e.g., 5"
                   value={formData.experience}
                   onChange={handleChange}
-                  className="input input-bordered"
+                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 placeholder-slate-400 text-sm min-h-[44px]"
                 />
               </div>
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold">
+                <label className="label py-1">
+                  <span className="text-slate-600 text-sm font-medium">
                     Consultation Fee ($)
                   </span>
                 </label>
@@ -159,7 +159,7 @@ export default function JoinDoctorPage() {
                   min="0"
                   value={formData.fee}
                   onChange={handleChange}
-                  className="input input-bordered"
+                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition text-slate-800 placeholder-slate-400 text-sm min-h-[44px]"
                 />
               </div>
             </div>
@@ -167,11 +167,11 @@ export default function JoinDoctorPage() {
             <div className="form-control mt-8">
               <button
                 type="submit"
-                className="btn btn-primary w-full text-lg"
+                className="w-full bg-sky-500 hover:bg-sky-600 text-white rounded-xl py-3 font-semibold transition-all duration-200 shadow-sm hover:shadow-md text-sm min-h-[44px]"
                 disabled={loading}
               >
                 {loading ? (
-                  <span className="loading loading-spinner"></span>
+                  <span className="loading loading-spinner text-white loading-sm"></span>
                 ) : (
                   "Submit Application"
                 )}

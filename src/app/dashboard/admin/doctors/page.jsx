@@ -124,17 +124,25 @@ export default function VerifyDoctorsPage() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleStatusUpdate(doc._id, "Verified")}
-                      className="bg-emerald-500 hover:bg-emerald-600 disabled:bg-slate-100 disabled:text-slate-400 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200 shadow-sm"
+                      className="bg-emerald-500 hover:bg-emerald-600 disabled:bg-slate-100 disabled:text-slate-400 text-white rounded-lg px-2.5 py-1.5 md:px-3 text-xs font-semibold transition-all duration-200 shadow-sm flex items-center gap-1.5 min-h-[44px]"
                       disabled={doc.verificationStatus === "Verified"}
+                      title="Approve Doctor"
                     >
-                      Approve
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="hidden md:inline">Approve</span>
                     </button>
                     <button
                       onClick={() => handleStatusUpdate(doc._id, "Rejected")}
-                      className="bg-red-500 hover:bg-red-600 disabled:bg-slate-100 disabled:text-slate-400 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200 shadow-sm"
+                      className="bg-red-500 hover:bg-red-600 disabled:bg-slate-100 disabled:text-slate-400 text-white rounded-lg px-2.5 py-1.5 md:px-3 text-xs font-semibold transition-all duration-200 shadow-sm flex items-center gap-1.5 min-h-[44px]"
                       disabled={doc.verificationStatus === "Rejected"}
+                      title="Reject Doctor"
                     >
-                      Reject
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="hidden md:inline">Reject</span>
                     </button>
                   </div>
                 </td>

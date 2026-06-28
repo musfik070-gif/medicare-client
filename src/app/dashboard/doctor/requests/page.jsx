@@ -129,17 +129,25 @@ export default function AppointmentRequestsPage() {
                           onClick={() =>
                             handleStatusChange(appt._id, "Approved")
                           }
-                          className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200"
+                          className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg px-2.5 py-1.5 md:px-3 text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 min-h-[44px]"
+                          title="Accept Request"
                         >
-                          Accept
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                          </svg>
+                          <span className="hidden md:inline">Accept</span>
                         </button>
                         <button
                           onClick={() =>
                             handleStatusChange(appt._id, "Rejected")
                           }
-                          className="bg-red-500 hover:bg-red-600 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200"
+                          className="bg-red-500 hover:bg-red-600 text-white rounded-lg px-2.5 py-1.5 md:px-3 text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 min-h-[44px]"
+                          title="Reject Request"
                         >
-                          Reject
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                          <span className="hidden md:inline">Reject</span>
                         </button>
                       </>
                     ) : null}
@@ -149,9 +157,13 @@ export default function AppointmentRequestsPage() {
                         onClick={() =>
                           handleStatusChange(appt._id, "Completed")
                         }
-                        className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200"
+                        className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg px-2.5 py-1.5 md:px-3 text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 min-h-[44px]"
+                        title="Mark Completed"
                       >
-                        Mark Completed
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span className="hidden md:inline">Mark Completed</span>
                       </button>
                     )}
                   </div>
