@@ -6,9 +6,9 @@ export default function DoctorPrescriptionsPage() {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Prescription Modal State
   const [selectedAppt, setSelectedAppt] = useState(null);
   const [prescriptionText, setPrescriptionText] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [saving, setSaving] = useState(false);
 
   const fetchAppointments = async () => {
@@ -23,9 +23,12 @@ export default function DoctorPrescriptionsPage() {
       const result = await response.json();
 
       if (result.success) {
-        // Only show Paid (ready for consultation) or Completed (already consulted) appointments
+        // Only show Approved, Paid, or Completed appointments
         const validAppointments = result.data.filter(
-          (appt) => appt.status === "Paid" || appt.status === "Completed",
+          (appt) =>
+            (appt.status || appt.appointmentStatus) === "Approved" ||
+            (appt.status || appt.appointmentStatus) === "Paid" ||
+            (appt.status || appt.appointmentStatus) === "Completed",
         );
         setAppointments(validAppointments);
       }
@@ -42,8 +45,8 @@ export default function DoctorPrescriptionsPage() {
 
   const openPrescriptionModal = (appt) => {
     setSelectedAppt(appt);
-    setPrescriptionText(appt.prescription || ""); // Load existing if any
-    document.getElementById("prescription_modal").showModal();
+    setPrescriptionText(appt.prescription || "");
+    setIsModalOpen(true);
   };
 
   const handleSavePrescription = async (e) => {
@@ -67,8 +70,9 @@ export default function DoctorPrescriptionsPage() {
 
       const result = await response.json();
       if (result.success) {
-        document.getElementById("prescription_modal").close();
-        fetchAppointments(); // Refresh to show "Completed" status
+        alert("Prescription saved successfully!");
+        setIsModalOpen(false);
+        fetchAppointments();
       } else {
         alert("Failed to save prescription.");
       }
@@ -100,34 +104,31 @@ export default function DoctorPrescriptionsPage() {
         <table className="table table-zebra w-full">
           <thead className="bg-base-200 text-base-content text-sm">
             <tr>
-              <th>Patient Name</th>
-              <th>Date & Time</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th>Patient</th>
+              <th>Date</th>
+              <th>Prescription Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {appointments.map((appt) => (
               <tr key={appt._id}>
-                <td className="font-bold">{appt.patientName}</td>
+                <td className="font-bold">{appt.patientName || "Anonymous"}</td>
+                <td>{appt.date || appt.appointmentDate}</td>
                 <td>
-                  <div className="font-semibold">{appt.date}</div>
-                  <div className="text-sm opacity-70">{appt.time}</div>
-                </td>
-                <td>
-                  <span
-                    className={`badge ${appt.status === "Completed" ? "badge-success" : "badge-info"}`}
-                  >
-                    {appt.status}
-                  </span>
+                  {appt.prescription ? (
+                    <span className="badge badge-success">Provided</span>
+                  ) : (
+                    <span className="badge badge-warning">Pending</span>
+                  )}
                 </td>
                 <td>
                   <button
                     onClick={() => openPrescriptionModal(appt)}
-                    className={`btn btn-sm ${appt.status === "Completed" ? "btn-outline" : "btn-primary"}`}
+                    className="btn btn-sm btn-primary"
                   >
-                    {appt.status === "Completed"
-                      ? "View/Edit Notes"
+                    {appt.prescription
+                      ? "Edit Prescription"
                       : "Write Prescription"}
                   </button>
                 </td>
@@ -138,71 +139,53 @@ export default function DoctorPrescriptionsPage() {
 
         {appointments.length === 0 && (
           <div className="text-center py-10 text-gray-500">
-            No paid or completed appointments available for prescriptions.
+            No approved appointments to prescribe for.
           </div>
         )}
       </div>
 
-      {/* DaisyUI Prescription Modal */}
-      <dialog
-        id="prescription_modal"
-        className="modal modal-bottom sm:modal-middle"
-      >
-        <div className="modal-box w-11/12 max-w-3xl">
-          <h3 className="font-bold text-2xl text-primary mb-4">
-            Medical Notes: {selectedAppt?.patientName}
-          </h3>
-
-          <div className="bg-base-200 p-3 rounded-lg mb-4 text-sm">
-            <strong>Appointment:</strong> {selectedAppt?.date} at{" "}
-            {selectedAppt?.time}
+      {/* Prescription Modal */}
+      {isModalOpen && (
+        <div className="modal modal-open">
+          <div className="modal-box w-11/12 max-w-3xl">
+            <h3 className="font-bold text-lg mb-4">
+              Prescription for {selectedAppt?.patientName || "Anonymous"}
+            </h3>
+            <form onSubmit={handleSavePrescription}>
+              <div className="form-control mb-4">
+                <textarea
+                  className="textarea textarea-bordered w-full h-48"
+                  placeholder="Enter medicines, dosage, and advice here..."
+                  value={prescriptionText}
+                  onChange={(e) => setPrescriptionText(e.target.value)}
+                  required
+                ></textarea>
+              </div>
+              <div className="modal-action">
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={() => setIsModalOpen(false)}
+                  disabled={saving}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={saving}
+                >
+                  {saving ? (
+                    <span className="loading loading-spinner"></span>
+                  ) : (
+                    "Save & Send"
+                  )}
+                </button>
+              </div>
+            </form>
           </div>
-
-          <form onSubmit={handleSavePrescription}>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold">
-                  Prescription & Advice
-                </span>
-              </label>
-              <textarea
-                className="textarea textarea-bordered h-48 w-full text-base"
-                placeholder="Write medicines, dosages, and medical advice here..."
-                value={prescriptionText}
-                onChange={(e) => setPrescriptionText(e.target.value)}
-                required
-              ></textarea>
-            </div>
-
-            <div className="modal-action mt-6">
-              <button
-                type="button"
-                className="btn btn-ghost"
-                onClick={() =>
-                  document.getElementById("prescription_modal").close()
-                }
-                disabled={saving}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="btn btn-primary px-8"
-                disabled={saving}
-              >
-                {saving ? (
-                  <span className="loading loading-spinner"></span>
-                ) : (
-                  "Save & Complete Appointment"
-                )}
-              </button>
-            </div>
-          </form>
         </div>
-        <form method="dialog" className="modal-backdrop">
-          <button disabled={saving}>close</button>
-        </form>
-      </dialog>
+      )}
     </div>
   );
 }
