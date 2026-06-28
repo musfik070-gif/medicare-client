@@ -33,15 +33,15 @@ export default function LoginPage() {
     const response = await loginUserAPI(credentials);
 
     if (response.success) {
-      setSuccess("Login successful! Redirecting to dashboard...");
+      setSuccess("Login successful! Redirecting...");
 
       // Save the VIP pass (Token) and User data to browser storage
       localStorage.setItem("token", response.token);
       localStorage.setItem("user", JSON.stringify(response.user));
 
-      // Redirect user to the private dashboard
+      // Redirect user to the home page
       setTimeout(() => {
-        router.push("/dashboard");
+        router.push("/");
       }, 1500);
     } else {
       setError(response.message || "Invalid credentials.");
@@ -81,11 +81,11 @@ export default function LoginPage() {
 
           const result = await response.json();
           if (result.success) {
-            setSuccess("Google login successful! Redirecting to dashboard...");
+            setSuccess("Google login successful! Redirecting...");
             localStorage.setItem("token", result.token);
             localStorage.setItem("user", JSON.stringify(result.user));
             setTimeout(() => {
-              router.push("/dashboard");
+              router.push("/");
             }, 1500);
           } else {
             setError(result.message || "Failed to log in with Google.");
