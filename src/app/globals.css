@@ -39,6 +39,15 @@
   border-color: var(--color-base-300);
 }
 
+.dark .dashboard-theme-fix tbody tr:hover,
+.dark .dashboard-theme-fix .hover\:bg-slate-50:hover {
+  background-color: color-mix(
+    in oklab,
+    var(--color-base-content) 8%,
+    var(--color-base-100)
+  );
+}
+
 .dark .dashboard-theme-fix input,
 .dark .dashboard-theme-fix textarea,
 .dark .dashboard-theme-fix select {
