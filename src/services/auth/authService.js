@@ -10,6 +10,7 @@ export const registerUserAPI = async (userData) => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(userData),
     });
 
@@ -28,6 +29,7 @@ export const loginUserAPI = async (credentials) => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(credentials),
     });
 
