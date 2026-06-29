@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 .dark .dashboard-theme-fix .bg-white,
