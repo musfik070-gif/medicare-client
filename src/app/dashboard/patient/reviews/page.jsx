@@ -1,5 +1,7 @@
 "use client";
 
+import { SERVER_URL } from "@/src/lib/api";
+
 import React, { useEffect, useState } from "react";
 
 export default function MyReviewsPage() {
@@ -16,7 +18,7 @@ export default function MyReviewsPage() {
     try {
       const token = localStorage.getItem("token");
       const res = await fetch(
-        "http://localhost:5001/api/reviews/patient/my-reviews",
+        `${SERVER_URL}/api/reviews/patient/my-reviews`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -38,7 +40,7 @@ export default function MyReviewsPage() {
     if (!window.confirm("Are you sure you want to delete this review?")) return;
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5001/api/reviews/${id}`, {
+      const res = await fetch(`${SERVER_URL}/api/reviews/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -57,7 +59,7 @@ export default function MyReviewsPage() {
     try {
       const token = localStorage.getItem("token");
       const res = await fetch(
-        `http://localhost:5001/api/reviews/${editData.id}`,
+        `${SERVER_URL}/api/reviews/${editData.id}`,
         {
           method: "PATCH",
           headers: {

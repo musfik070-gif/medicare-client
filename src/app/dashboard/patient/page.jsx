@@ -1,5 +1,7 @@
 "use client";
 
+import { SERVER_URL } from "@/src/lib/api";
+
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -21,7 +23,7 @@ export default function PatientDashboardOverview() {
         setUserName(user.name || "Patient");
 
         const apptRes = await fetch(
-          "http://localhost:5001/api/appointments/patient/my-appointments",
+          `${SERVER_URL}/api/appointments/patient/my-appointments`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -29,7 +31,7 @@ export default function PatientDashboardOverview() {
         const apptResult = await apptRes.json();
 
         const payRes = await fetch(
-          "http://localhost:5001/api/payments/patient/history",
+          `${SERVER_URL}/api/payments/patient/history`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },

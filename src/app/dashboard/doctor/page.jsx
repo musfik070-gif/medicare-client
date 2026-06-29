@@ -1,5 +1,7 @@
 "use client";
 
+import { SERVER_URL } from "@/src/lib/api";
+
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -20,7 +22,7 @@ export default function DoctorDashboardOverview() {
         setUserName(user.name || "Doctor");
 
         // 1. Fetch Appointments
-        const apptRes = await fetch("http://localhost:5001/api/appointments/doctor/requests", {
+        const apptRes = await fetch(`${SERVER_URL}/api/appointments/doctor/requests`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const apptResult = await apptRes.json();
@@ -48,7 +50,7 @@ export default function DoctorDashboardOverview() {
         const reviewResults = await Promise.all(
           [...doctorIds].map(async (doctorId) => {
             const reviewRes = await fetch(
-              `http://localhost:5001/api/reviews/doctor/${doctorId}`,
+              `${SERVER_URL}/api/reviews/doctor/${doctorId}`,
             );
             const reviewResult = await reviewRes.json();
             return reviewResult.success ? reviewResult.data : [];

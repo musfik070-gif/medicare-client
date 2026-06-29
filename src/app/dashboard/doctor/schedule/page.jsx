@@ -1,4 +1,6 @@
 "use client";
+
+import { SERVER_URL } from "@/src/lib/api";
 import React, { useState, useEffect } from "react";
 
 export default function ManageSchedulePage() {
@@ -13,7 +15,7 @@ export default function ManageSchedulePage() {
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
-        const res = await fetch("http://localhost:5001/api/doctors/profile/me", {
+        const res = await fetch(`${SERVER_URL}/api/doctors/profile/me`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         const data = await res.json();
@@ -55,7 +57,7 @@ export default function ManageSchedulePage() {
   const saveSchedule = async () => {
     setSaving(true);
     try {
-      const res = await fetch("http://localhost:5001/api/doctors/profile/me", {
+      const res = await fetch(`${SERVER_URL}/api/doctors/profile/me`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

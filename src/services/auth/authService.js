@@ -1,9 +1,11 @@
-const API_BASE_URL = "http://localhost:5001/api/auth"; // Make sure 5001 matches your server port!
+import { API_BASE_URL } from "@/src/lib/api";
+
+const AUTH_API_URL = `${API_BASE_URL}/auth`;
 
 // Call backend to register a new user
 export const registerUserAPI = async (userData) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/register`, {
+    const response = await fetch(`${AUTH_API_URL}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,7 +23,7 @@ export const registerUserAPI = async (userData) => {
 // Call backend to login an existing user
 export const loginUserAPI = async (credentials) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/login`, {
+    const response = await fetch(`${AUTH_API_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

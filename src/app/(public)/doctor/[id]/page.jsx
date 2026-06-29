@@ -1,5 +1,7 @@
 "use client";
 
+import { SERVER_URL } from "@/src/lib/api";
+
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
@@ -21,7 +23,7 @@ export default function DoctorDetailsPage() {
     const fetchDoctorDetails = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5001/api/doctors/${params.id}`,
+          `${SERVER_URL}/api/doctors/${params.id}`,
         );
         const result = await response.json();
 
@@ -63,7 +65,7 @@ export default function DoctorDetailsPage() {
     };
 
     try {
-      const response = await fetch("http://localhost:5001/api/appointments", {
+      const response = await fetch(`${SERVER_URL}/api/appointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

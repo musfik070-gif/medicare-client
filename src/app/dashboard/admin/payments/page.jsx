@@ -1,5 +1,7 @@
 "use client";
 
+import { SERVER_URL } from "@/src/lib/api";
+
 import React, { useEffect, useState } from "react";
 
 export default function AdminPaymentsPage() {
@@ -11,7 +13,7 @@ export default function AdminPaymentsPage() {
       try {
         const token = localStorage.getItem("token");
         const response = await fetch(
-          "http://localhost:5001/api/payments/admin/all",
+          `${SERVER_URL}/api/payments/admin/all`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -1,5 +1,7 @@
 "use client";
 
+import { SERVER_URL } from "@/src/lib/api";
+
 import React, { useEffect, useState } from "react";
 
 export default function ManageUsersPage() {
@@ -10,7 +12,7 @@ export default function ManageUsersPage() {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:5001/api/users", {
+      const response = await fetch(`${SERVER_URL}/api/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -37,7 +39,7 @@ export default function ManageUsersPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:5001/api/users/${id}/status`,
+        `${SERVER_URL}/api/users/${id}/status`,
         {
           method: "PATCH",
           headers: {
@@ -68,7 +70,7 @@ export default function ManageUsersPage() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`http://localhost:5001/api/users/${id}`, {
+      const response = await fetch(`${SERVER_URL}/api/users/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -1,5 +1,7 @@
 "use client";
 
+import { SERVER_URL } from "@/src/lib/api";
+
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -35,7 +37,7 @@ export default function JoinDoctorPage() {
       // 1. Grab the token from local storage
       const token = localStorage.getItem("token");
 
-      const res = await fetch("http://localhost:5001/api/doctors/apply", {
+      const res = await fetch(`${SERVER_URL}/api/doctors/apply`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

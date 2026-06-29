@@ -1,5 +1,7 @@
 "use client";
 
+import { SERVER_URL } from "@/src/lib/api";
+
 import React, { useEffect, useState } from "react";
 
 export default function DoctorProfilePage() {
@@ -22,7 +24,7 @@ export default function DoctorProfilePage() {
       try {
         const token = localStorage.getItem("token");
         const response = await fetch(
-          "http://localhost:5001/api/doctors/profile/me",
+          `${SERVER_URL}/api/doctors/profile/me`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -92,7 +94,7 @@ export default function DoctorProfilePage() {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        "http://localhost:5001/api/doctors/profile/me",
+        `${SERVER_URL}/api/doctors/profile/me`,
         {
           method: "PATCH",
           headers: {

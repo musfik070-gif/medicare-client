@@ -1,5 +1,7 @@
 "use client";
 
+import { SERVER_URL } from "@/src/lib/api";
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -20,7 +22,7 @@ export default function FindDoctorsPage() {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:5001/api/doctors?search=${searchQuery}&sort=${sortOption}&page=${currentPage}&limit=6`,
+        `${SERVER_URL}/api/doctors?search=${searchQuery}&sort=${sortOption}&page=${currentPage}&limit=6`,
       );
       const result = await response.json();
 

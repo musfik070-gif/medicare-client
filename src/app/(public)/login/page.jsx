@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { loginUserAPI } from "../../../services/auth/authService";
 import { authClient } from "../../../lib/auth-client";
+import { API_BASE_URL } from "@/src/lib/api";
 
 export default function LoginPage() {
   const [error, setError] = useState("");
@@ -66,14 +67,7 @@ export default function LoginPage() {
           }
 
           // Exchange Better Auth session for the JWT token
-          const serverUrl =
-            process.env.NEXT_PUBLIC_API_URL ||
-            process.env.NEXT_PUBLIC_SERVER_URL ||
-            "http://localhost:5001";
-          const authUrl = serverUrl.endsWith("/api/auth")
-            ? serverUrl
-            : `${serverUrl.replace(/\/$/, "")}/api/auth`;
-          const response = await fetch(`${authUrl}/google`, {
+          const response = await fetch(`${API_BASE_URL}/auth/google`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

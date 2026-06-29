@@ -1,5 +1,7 @@
 "use client";
 
+import { SERVER_URL } from "@/src/lib/api";
+
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -25,7 +27,7 @@ export default function PatientAppointmentsPage() {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        "http://localhost:5001/api/appointments/patient/my-appointments",
+        `${SERVER_URL}/api/appointments/patient/my-appointments`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -66,7 +68,7 @@ export default function PatientAppointmentsPage() {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5001/api/appointments/${id}`, {
+      const res = await fetch(`${SERVER_URL}/api/appointments/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -93,7 +95,7 @@ export default function PatientAppointmentsPage() {
     try {
       const token = localStorage.getItem("token");
       const res = await fetch(
-        `http://localhost:5001/api/appointments/${rescheduleData.id}`,
+        `${SERVER_URL}/api/appointments/${rescheduleData.id}`,
         {
           method: "PATCH",
           headers: {
@@ -130,7 +132,7 @@ export default function PatientAppointmentsPage() {
 
     try {
       const response = await fetch(
-        "http://localhost:5001/api/payments/create-checkout-session",
+        `${SERVER_URL}/api/payments/create-checkout-session`,
         {
           method: "POST",
           headers: {
@@ -162,7 +164,7 @@ export default function PatientAppointmentsPage() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch("http://localhost:5001/api/reviews", {
+      const response = await fetch(`${SERVER_URL}/api/reviews`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

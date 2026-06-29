@@ -1,5 +1,7 @@
 "use client";
 
+import { SERVER_URL } from "@/src/lib/api";
+
 import React, { useEffect, useState } from "react";
 import {
   BarChart,
@@ -26,7 +28,7 @@ export default function AdminDashboardAnalytics() {
       try {
         const token = localStorage.getItem("token");
         const res = await fetch(
-          "http://localhost:5001/api/users/admin/analytics",
+          `${SERVER_URL}/api/users/admin/analytics`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },

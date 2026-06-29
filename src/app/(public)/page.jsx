@@ -1,5 +1,7 @@
 "use client";
 
+import { SERVER_URL } from "@/src/lib/api";
+
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -15,14 +17,14 @@ export default function HomePage() {
   useEffect(() => {
     const fetchHomeData = async () => {
       try {
-        const homeResponse = await fetch("http://localhost:5001/api/home");
+        const homeResponse = await fetch(`${SERVER_URL}/api/home`);
         const homeResult = await homeResponse.json();
         if (homeResult.success) {
           setHomeData(homeResult.data);
         }
 
         const reviewsResponse = await fetch(
-          "http://localhost:5001/api/reviews/all",
+          `${SERVER_URL}/api/reviews/all`,
         );
         const reviewsResult = await reviewsResponse.json();
         if (reviewsResult.success) {

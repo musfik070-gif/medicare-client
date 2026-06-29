@@ -1,5 +1,7 @@
 "use client";
 
+import { SERVER_URL } from "@/src/lib/api";
+
 import React, { useEffect, useState } from "react";
 
 export default function AdminAppointmentsPage() {
@@ -11,7 +13,7 @@ export default function AdminAppointmentsPage() {
       try {
         const token = localStorage.getItem("token");
         const response = await fetch(
-          "http://localhost:5001/api/appointments/admin/all",
+          `${SERVER_URL}/api/appointments/admin/all`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
