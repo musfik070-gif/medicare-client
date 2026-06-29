@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { loginUserAPI } from "../../../services/auth/authService";
 import { authClient } from "../../../lib/auth-client";
+import { wakeUpServer } from "../../../lib/wakeup";
 import { API_BASE_URL } from "@/src/lib/api";
 
 export default function LoginPage() {
@@ -107,9 +108,14 @@ export default function LoginPage() {
     setSuccess("");
     setLoading(true);
     try {
+      // Wake up Render server first, wait for it to be fully alive
+      await wakeUpServer();
+      // Wait 2 seconds after wakeup before initiating OAuth
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: window.location.origin + "/login?google_success=true",
+        callbackURL: "https://medicare-client-gamma.vercel.app/login?google_success=true",
       });
     } catch (err) {
       console.error("Google Login Error:", err);
