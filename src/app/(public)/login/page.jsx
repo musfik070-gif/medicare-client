@@ -118,36 +118,36 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-primary/10 via-base-200 to-secondary/10 p-4">
-      <div className="card w-full max-w-md shadow-2xl bg-base-100 border border-base-300">
-        <div className="card-body p-8">
-          <h2 className="text-3xl font-extrabold text-center mb-2 text-primary">Login</h2>
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center px-4">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 w-full max-w-md">
+        <div>
+          <h2 className="text-3xl font-bold text-slate-800 dark:text-white text-center mb-6">Login</h2>
 
           <form onSubmit={handleEmailLogin} className="space-y-4">
             {/* Email Field */}
             <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold">Email</span>
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 block">
+                <span>Email</span>
               </label>
               <input
                 type="email"
                 name="email"
                 placeholder="email@example.com"
-                className="input input-bordered w-full focus:input-primary"
+                className="w-full border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white placeholder:text-slate-400 rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition"
                 required
               />
             </div>
 
             {/* Password Field */}
             <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold">Password</span>
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 block">
+                <span>Password</span>
               </label>
               <input
                 type="password"
                 name="password"
                 placeholder="******"
-                className="input input-bordered w-full focus:input-primary"
+                className="w-full border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white placeholder:text-slate-400 rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition"
                 required
               />
             </div>
@@ -162,7 +162,7 @@ export default function LoginPage() {
             <div className="form-control pt-2">
               <button
                 type="submit"
-                className="btn btn-primary w-full shadow-lg shadow-primary/20"
+                className="w-full bg-sky-500 hover:bg-sky-600 text-white rounded-lg py-3 font-medium transition-all duration-200"
                 disabled={loading}
               >
                 {loading ? (
@@ -174,18 +174,22 @@ export default function LoginPage() {
             </div>
           </form>
 
-          <div className="divider text-base-content/50">OR</div>
+          <div className="my-6 flex items-center gap-3 text-slate-400 dark:text-slate-500 text-sm">
+            <div className="flex-1 border-t border-slate-200 dark:border-slate-600"></div>
+            <span>OR</span>
+            <div className="flex-1 border-t border-slate-200 dark:border-slate-600"></div>
+          </div>
 
           {/* Google Login Button */}
           <button
             onClick={handleGoogleLogin}
-            className="btn btn-outline btn-secondary w-full"
+            className="w-full flex items-center justify-center gap-3 border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg py-3 font-medium transition-all duration-200"
             type="button"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 48 48"
-              className="w-5 h-5 mr-2"
+              className="w-5 h-5"
             >
               <path
                 fill="#EA4335"
@@ -207,11 +211,11 @@ export default function LoginPage() {
             Continue with Google
           </button>
 
-          <p className="text-center mt-4 text-sm text-base-content/70">
+          <p className="text-slate-500 dark:text-slate-400 text-sm text-center mt-4">
             Don't have an account?{" "}
             <Link
               href="/register"
-              className="text-primary font-bold hover:underline"
+              className="text-sky-500 hover:text-sky-600 font-medium"
             >
               Register here
             </Link>

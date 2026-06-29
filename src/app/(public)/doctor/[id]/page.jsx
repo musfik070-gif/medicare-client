@@ -109,60 +109,77 @@ export default function DoctorDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-base-200 py-10">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 py-10">
       <div className="container mx-auto px-4 max-w-4xl">
-        <div className="card lg:card-side bg-base-100 shadow-xl border border-base-300">
-          <figure className="p-8 lg:w-1/3 flex justify-center bg-base-200">
+        <div className="lg:flex bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8">
+          <figure className="lg:w-1/3 flex justify-center">
             <img
               src={doctor.profileImage || "https://via.placeholder.com/300"}
               alt={doctor.doctorName}
-              className="rounded-xl w-64 h-64 object-cover shadow-lg border-4 border-white"
+              className="rounded-xl w-64 h-64 object-cover border-2 border-slate-200 dark:border-slate-700"
             />
           </figure>
 
-          <div className="card-body lg:w-2/3">
-            <h2 className="card-title text-4xl font-bold text-primary mb-2">
+          <div className="lg:w-2/3 lg:pl-8 pt-8 lg:pt-0">
+            <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">
               {doctor.doctorName}
             </h2>
-            <div className="flex gap-2 mb-4">
-              <span className="badge badge-secondary badge-lg">
+            <div className="flex flex-wrap gap-2 mb-4">
+              <span className="bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300 text-sm font-medium px-3 py-1 rounded-full">
                 {doctor.specialization}
               </span>
-              <span className="badge badge-outline badge-lg">Verified ✔</span>
+              <span className="bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-700 text-sm px-3 py-1 rounded-full">
+                Verified ✔
+              </span>
             </div>
 
-            <div className="space-y-3 text-lg mb-6">
-              <p>
-                <strong>Qualifications:</strong> {doctor.qualifications}
+            <div className="space-y-3 mb-6">
+              <p className="text-slate-700 dark:text-slate-300 text-sm">
+                Qualifications:{" "}
+                <span className="text-slate-900 dark:text-white font-medium">
+                  {doctor.qualifications}
+                </span>
               </p>
-              <p>
-                <strong>Hospital:</strong> {doctor.hospitalName}
+              <p className="text-slate-700 dark:text-slate-300 text-sm">
+                Hospital:{" "}
+                <span className="text-slate-900 dark:text-white font-medium">
+                  {doctor.hospitalName}
+                </span>
               </p>
-              <p>
-                <strong>Experience:</strong> {doctor.experience} Years
+              <p className="text-slate-700 dark:text-slate-300 text-sm">
+                Experience:{" "}
+                <span className="text-slate-900 dark:text-white font-medium">
+                  {doctor.experience} Years
+                </span>
               </p>
-              <p>
-                <strong>Consultation Fee:</strong>{" "}
-                <span className="text-success font-bold">
+              <p className="text-slate-700 dark:text-slate-300 text-sm">
+                Consultation Fee:{" "}
+                <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
                   ${doctor.consultationFee}
                 </span>
               </p>
-              <p>
-                <strong>Available Days:</strong>{" "}
-                {doctor.availableDays?.join(", ") || "Contact for availability"}
+              <p className="text-slate-700 dark:text-slate-300 text-sm">
+                Available Days:{" "}
+                <span className="text-slate-900 dark:text-white font-medium">
+                  {doctor.availableDays?.join(", ") ||
+                    "Contact for availability"}
+                </span>
               </p>
             </div>
 
-            <div className="divider"></div>
+            <div className="border-t border-slate-200 dark:border-slate-700"></div>
 
-            <div className="card-actions justify-end mt-4">
-              <Link href="/find-doctors" className="btn btn-ghost mr-2">
+            <div className="flex flex-wrap justify-end gap-3 mt-4">
+              <Link
+                href="/find-doctors"
+                className="text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors px-4 py-3"
+              >
                 Back
               </Link>
 
               {/* Trigger the Modal */}
               <button
-                className="btn btn-primary btn-lg px-8"
+                className="bg-sky-500 hover:bg-sky-600 text-white rounded-lg px-6 py-3 font-medium transition-all"
                 onClick={() =>
                   document.getElementById("booking_modal").showModal()
                 }
@@ -175,47 +192,52 @@ export default function DoctorDetailsPage() {
       </div>
 
       {/* DaisyUI Booking Modal */}
-      <dialog id="booking_modal" className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
-          <h3 className="font-bold text-2xl text-primary mb-4">
+      <dialog
+        id="booking_modal"
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 p-0 m-0 w-full max-w-none h-full max-h-none items-center justify-center open:flex"
+      >
+        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-8 w-full max-w-md mx-4">
+          <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-4">
             Book with {doctor.doctorName}
           </h3>
 
           <form onSubmit={handleBooking} className="space-y-4">
             <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold">Select Date</span>
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                <span>Select Date</span>
               </label>
               <input
                 type="date"
                 required
                 value={bookingDate}
                 onChange={(e) => setBookingDate(e.target.value)}
-                className="input input-bordered w-full"
+                className="w-full border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition"
               />
             </div>
 
             <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold">Select Time</span>
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                <span>Select Time</span>
               </label>
               <input
                 type="time"
                 required
                 value={bookingTime}
                 onChange={(e) => setBookingTime(e.target.value)}
-                className="input input-bordered w-full"
+                className="w-full border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition"
               />
             </div>
 
-            <div className="bg-base-200 p-4 rounded-lg mt-4">
+            <div className="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-lg mt-4">
               <p className="flex justify-between">
-                <span>Consultation Fee:</span>{" "}
-                <span className="font-bold text-success">
+                <span className="text-slate-600 dark:text-slate-400 text-sm">
+                  Consultation Fee:
+                </span>{" "}
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold text-lg">
                   ${doctor.consultationFee}
                 </span>
               </p>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-slate-400 dark:text-slate-500 text-xs mt-1">
                 Payment will be collected after doctor approval.
               </p>
             </div>
@@ -227,14 +249,14 @@ export default function DoctorDetailsPage() {
             <div className="modal-action mt-6">
               <button
                 type="button"
-                className="btn btn-ghost"
+                className="text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white px-5 py-2.5 rounded-lg border border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all"
                 onClick={() => document.getElementById("booking_modal").close()}
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="bg-sky-500 hover:bg-sky-600 text-white rounded-lg px-6 py-2.5 font-medium transition-all"
                 disabled={bookingLoading}
               >
                 {bookingLoading ? (

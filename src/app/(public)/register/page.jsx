@@ -56,65 +56,65 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-primary/10 via-base-200 to-secondary/10 p-4">
-      <div className="card w-full max-w-md shadow-2xl bg-base-100 border border-base-300">
-        <form onSubmit={handleRegister} className="card-body p-8 space-y-3">
-          <h2 className="text-3xl font-extrabold text-center mb-2 text-primary">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center px-4">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 w-full max-w-md">
+        <form onSubmit={handleRegister} className="space-y-3">
+          <h2 className="text-3xl font-bold text-slate-800 dark:text-white text-center mb-6">
             Create Account
           </h2>
 
           {/* Name Field */}
           <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Full Name</span>
+            <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 block">
+              <span>Full Name</span>
             </label>
             <input
               type="text"
               name="name"
               placeholder="John Doe"
-              className="input input-bordered w-full focus:input-primary"
+              className="w-full border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white placeholder:text-slate-400 rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition"
               required
             />
           </div>
 
           {/* Email Field */}
           <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Email</span>
+            <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 block">
+              <span>Email</span>
             </label>
             <input
               type="email"
               name="email"
               placeholder="email@example.com"
-              className="input input-bordered w-full focus:input-primary"
+              className="w-full border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white placeholder:text-slate-400 rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition"
               required
             />
           </div>
 
           {/* Photo URL Field */}
           <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Photo URL</span>
+            <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 block">
+              <span>Photo URL</span>
             </label>
             <input
               type="url"
               name="photoURL"
               placeholder="https://example.com/photo.jpg"
-              className="input input-bordered w-full focus:input-primary"
+              className="w-full border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white placeholder:text-slate-400 rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition"
               required
             />
           </div>
 
           {/* Password Field */}
           <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Password</span>
+            <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 block">
+              <span>Password</span>
             </label>
             <input
               type="password"
               name="password"
               placeholder="******"
-              className="input input-bordered w-full focus:input-primary"
+              className="w-full border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white placeholder:text-slate-400 rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition"
               required
             />
           </div>
@@ -127,7 +127,7 @@ export default function RegisterPage() {
           <div className="form-control pt-3">
             <button
               type="submit"
-              className="btn btn-primary w-full shadow-lg shadow-primary/20"
+              className="w-full bg-sky-500 hover:bg-sky-600 text-white rounded-lg py-3 font-medium transition-all duration-200"
               disabled={loading}
             >
               {loading ? (
@@ -138,11 +138,11 @@ export default function RegisterPage() {
             </button>
           </div>
 
-          <p className="text-center mt-4 text-sm text-base-content/70">
+          <p className="text-slate-500 dark:text-slate-400 text-sm text-center mt-4">
             Already have an account?{" "}
             <Link
               href="/login"
-              className="text-primary font-bold hover:underline"
+              className="text-sky-500 hover:text-sky-600 font-medium"
             >
               Login here
             </Link>
